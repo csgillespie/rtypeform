@@ -1,11 +1,11 @@
 #' Fetch all available typeforms
 #'
-#' This functions returns a data frame containing your typeforms and their
+#' This function returns a data frame containing your typeforms and their
 #' associated UIDs.
 #' @importFrom jsonlite fromJSON
 #' @param api Default \code{NULL}. Your private api key. If \code{api} is \code{NULL}
 #' we use the environment variable \code{Sys.getenv("typeform_api")}.
-#' @return A two column data frame
+#' @return A two column data frame.
 #' @export
 #' @examples
 #' \dontrun{

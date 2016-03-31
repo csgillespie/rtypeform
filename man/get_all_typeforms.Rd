@@ -11,10 +11,10 @@ get_all_typeforms(api = NULL)
 we use the environment variable \code{Sys.getenv("typeform_api")}.}
 }
 \value{
-A two column data frame
+A two column data frame.
 }
 \description{
-This functions returns a data frame containing your typeforms and their
+This function returns a data frame containing your typeforms and their
 associated UIDs.
 }
 \examples{
