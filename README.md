@@ -1,6 +1,6 @@
 # API to typeform data sets
 [![Build Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rtypeform)](http://cran.r-project.org/package=rtypeform)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
 [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
 [Typeform](https://typeform.com) is a company that specialises in online form building. 
