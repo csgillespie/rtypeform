@@ -8,7 +8,7 @@ Authors@R: person(given="Colin", family="Gillespie",
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 URL: https://github.com/csgillespie/rtypeform
 BugReports: https://github.com/csgillespie/rtypeform/issues
-Description: An R interface to 'typeform' application program interface ('API').
+Description: An R interface to 'typeform' application program interface.
   Also provides functions for downloading your results.
 License: GPL-2 | GPL-3
 LazyData: TRUE
