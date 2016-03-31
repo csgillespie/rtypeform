@@ -12,7 +12,7 @@ This R package allows users to download their form results through the exposed A
 The package can be installed via `devtools`
 
 ```
-devtools::install_github("csgillespie/typeform")
+devtools::install_github("csgillespie/rtypeform")
 ```
 
 The package can then be loaded in the usual way
