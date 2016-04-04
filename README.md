@@ -9,7 +9,13 @@ API to typeform data sets
 Installation
 ------------
 
-The package can be installed via `devtools`
+The package can be installed from CRAN
+
+``` r
+install.packages("rtypeform")
+```
+
+or you can install the development version via `devtools`
 
 ``` r
 devtools::install_github("csgillespie/rtypeform")

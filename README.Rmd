@@ -26,7 +26,13 @@ This R package allows users to download their form results through the exposed A
 
 ## Installation
 
-The package can be installed via `devtools`
+The package can be installed from CRAN
+
+```{r eval=FALSE}
+install.packages("rtypeform")
+```
+
+or you can install the development version via `devtools`
 
 ```{r eval=FALSE}
 devtools::install_github("csgillespie/rtypeform")
