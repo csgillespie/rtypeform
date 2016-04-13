@@ -5,8 +5,7 @@
 \title{Download questionnaire results}
 \usage{
 get_results(uid, api = NULL, completed = NULL, since = NULL,
-  until = NULL, offset = NULL, limit = NULL, order_by = NULL,
-  simplify = TRUE)
+  until = NULL, offset = NULL, limit = NULL, order_by = NULL)
 }
 \arguments{
 \item{uid}{The UID (unique identifier) of the typeform you want the results for.}
@@ -32,9 +31,9 @@ If \code{NULL} return all results.}
 
 \item{order_by}{One of "completed", "date_land_desc", "date_land_incr",
 "date_submit_desc", or "date_submit_incr".}
-
-\item{simplify, }{Logical. By default, \code{TRUE}, and returns only the questionnaire
-responses as a data frame. If \code{FALSE} return all results from the API call.}
+}
+\value{
+A list containing questions, stats, responses and http response.
 }
 \description{
 Download results for a particular typeform questionnaire.
@@ -43,7 +42,10 @@ Download results for a particular typeform questionnaire.
 \dontrun{
 uid = "XXXX"
 api = "YYYY"
-get_results(uid, api)
+results = get_results(uid, api)
+results$stats
+results$questions
+results$responses
 }
 }
 \seealso{

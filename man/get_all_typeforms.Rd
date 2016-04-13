@@ -11,7 +11,7 @@ get_all_typeforms(api = NULL)
 we use the environment variable \code{Sys.getenv("typeform_api")}.}
 }
 \value{
-A two column data frame.
+A list containing content and the response.
 }
 \description{
 This function returns a data frame containing your typeforms and their
@@ -20,7 +20,8 @@ associated UIDs.
 \examples{
 \dontrun{
 api = "XXXXX"
-get_all_typeforms(api)
+tf = get_all_typeforms(api)
+tf$content
 }
 }
 

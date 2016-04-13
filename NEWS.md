@@ -1,3 +1,7 @@
+# Version 0.2.0
+  * Adding user agent to API call.
+  * Better error handling.
+
 # Version 0.1.1
   * Minor tweaks for CRAN.
 

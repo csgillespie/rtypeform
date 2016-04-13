@@ -39,20 +39,21 @@ get_order_by = function(order_by) {
 #' If \code{NULL} return all results.
 #' @param order_by One of "completed", "date_land_desc", "date_land_incr",
 #' "date_submit_desc", or "date_submit_incr".
-#' @param simplify, Logical. By default, \code{TRUE}, and returns only the questionnaire
-#' responses as a data frame. If \code{FALSE} return all results from the API call.
+#' @return A list containing questions, stats, responses and http response.
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
 #' @examples
 #' \dontrun{
 #' uid = "XXXX"
 #' api = "YYYY"
-#' get_results(uid, api)
+#' results = get_results(uid, api)
+#' results$stats
+#' results$questions
+#' results$responses
 #' }
 get_results = function(uid, api=NULL,
                        completed=NULL, since=NULL, until=NULL, offset=NULL, limit=NULL,
-                       order_by = NULL,
-                       simplify=TRUE) {
+                       order_by = NULL) {
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
   if(!is.null(completed)) {
@@ -66,9 +67,20 @@ get_results = function(uid, api=NULL,
   if(!is.null(limit)) url = paste0(url, "&limit=", limit)
 
   url = paste0(url , get_order_by(order_by))
-  results = jsonlite::fromJSON(url)
-  if(simplify)
-    return(results$response)
-  else
-    return(results)
+
+  ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
+  resp = httr::GET(url, ua)
+  cont = httr::content(resp, "text")
+  check_api_response(resp, cont)
+
+  parsed = jsonlite::fromJSON(cont)
+  structure(
+    list(
+      stats = parsed$stats,
+      questions = parsed$questions,
+      responses = parsed$responses,
+      response = resp
+    ),
+    class = "rtypeform_api"
+  )
 }

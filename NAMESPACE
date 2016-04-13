@@ -2,4 +2,8 @@
 
 export(get_all_typeforms)
 export(get_results)
+importFrom(httr,GET)
+importFrom(httr,content)
+importFrom(httr,status_code)
+importFrom(httr,user_agent)
 importFrom(jsonlite,fromJSON)
