@@ -81,6 +81,7 @@ get_results = function(uid, api=NULL,
       responses = parsed$responses,
       response = resp
     ),
-    class = "rtypeform_api"
+    class = "rtypeform_results"
   )
 }
+

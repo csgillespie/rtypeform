@@ -27,7 +27,6 @@ get_all_typeforms = function(api=NULL) {
       content = jsonlite::fromJSON(cont),
       response = resp
     ),
-    class = "rtypeform_api"
+    class = "rtypeform_all_typeforms"
   )
 }
-
