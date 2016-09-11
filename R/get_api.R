@@ -2,7 +2,7 @@
 #'
 #' If the entry \code{typeform_api} exist in your
 #' \code{.Renviron} return that value. Otherwise, raise an error.
-#' @inheritParams get_results
+#' @inheritParams get_all_typeforms
 #' @export
 get_api = function(api=NULL){
   if(is.null(api))
