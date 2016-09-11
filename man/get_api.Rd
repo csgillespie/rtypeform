@@ -11,7 +11,7 @@ get_api(api = NULL)
 we use the environment variable \code{Sys.getenv("typeform_api")}.}
 }
 \description{
-If the entry \code{typeform_api} exist in your
+If the entry \code{typeform_api} exists in your
 \code{.Renviron} return that value. Otherwise, raise an error.
 }
 

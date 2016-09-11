@@ -1,6 +1,6 @@
 #' Retrieve API key from Renviron
 #'
-#' If the entry \code{typeform_api} exist in your
+#' If the entry \code{typeform_api} exists in your
 #' \code{.Renviron} return that value. Otherwise, raise an error.
 #' @inheritParams get_all_typeforms
 #' @export
