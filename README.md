@@ -77,4 +77,3 @@ Other information
 
 -   If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/typeform/issues).
 -   Feel free to submit pull requests.
--   I intend to submit the package to CRAN within the next week or so.
