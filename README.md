@@ -2,7 +2,7 @@
 API to typeform data sets
 =========================
 
-[![Build Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform) [![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](http://cran.rstudio.com/package=rtypeform) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform) [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
+[![Build Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform) [![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform) [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
 [Typeform](https://typeform.com) is a company that specialises in online form building. This R package allows users to download their form results through the exposed API.
 
@@ -75,5 +75,5 @@ get_results(uid, api, completed=TRUE, order_by="date_submit_desc", limit=10)
 Other information
 -----------------
 
--   If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/typeform/issues).
+-   If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/rtypeform/issues).
 -   Feel free to submit pull requests.
