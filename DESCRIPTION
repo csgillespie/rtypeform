@@ -1,13 +1,13 @@
 Package: rtypeform
 Type: Package
 Title: Interface to 'typeform' Results
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 URL: https://github.com/csgillespie/rtypeform
 BugReports: https://github.com/csgillespie/rtypeform/issues
-Description: An R interface to the 'typeform' (https://typeform.com) application program interface.
+Description: An R interface to the 'typeform' <https://typeform.com> application program interface.
   Also provides functions for downloading your results.
 License: GPL-2 | GPL-3
 LazyData: TRUE
