@@ -2,6 +2,7 @@
   * Adding user agent to API call.
   * Better error handling.
   * Export get_api function.
+  * Adding automatic type conversion
 
 # Version 0.1.1
   * Minor tweaks for CRAN.
