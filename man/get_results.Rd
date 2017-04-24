@@ -5,7 +5,8 @@
 \title{Download questionnaire results}
 \usage{
 get_results(uid, api = NULL, completed = NULL, since = NULL,
-  until = NULL, offset = NULL, limit = NULL, order_by = NULL)
+  until = NULL, offset = NULL, limit = NULL, order_by = NULL,
+  stringsAsFactors = default.stringsAsFactors())
 }
 \arguments{
 \item{uid}{The UID (unique identifier) of the typeform you want the results for.}
@@ -31,6 +32,8 @@ If \code{NULL} return all results.}
 
 \item{order_by}{One of "completed", "date_land_desc", "date_land_incr",
 "date_submit_desc", or "date_submit_incr".}
+
+\item{stringsAsFactors}{See \code{\link{default.stringsAsFactors}}}
 }
 \value{
 A list containing questions, stats, responses and http response.
@@ -51,4 +54,3 @@ results$responses
 \seealso{
 https://www.typeform.com/help/data-api/
 }
-
