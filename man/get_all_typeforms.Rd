@@ -24,4 +24,3 @@ tf = get_all_typeforms(api)
 tf$content
 }
 }
-

@@ -14,4 +14,3 @@ we use the environment variable \code{Sys.getenv("typeform_api")}.}
 If the entry \code{typeform_api} exists in your
 \code{.Renviron} return that value. Otherwise, raise an error.
 }
-
