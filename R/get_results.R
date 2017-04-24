@@ -39,6 +39,7 @@ get_order_by = function(order_by) {
 #' If \code{NULL} return all results.
 #' @param order_by One of "completed", "date_land_desc", "date_land_incr",
 #' "date_submit_desc", or "date_submit_incr".
+#' @param stringsAsFactors See \code{\link{default.stringsAsFactors}}
 #' @return A list containing questions, stats, responses and http response.
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
@@ -53,7 +54,7 @@ get_order_by = function(order_by) {
 #' }
 get_results = function(uid, api=NULL,
                        completed=NULL, since=NULL, until=NULL, offset=NULL, limit=NULL,
-                       order_by = NULL) {
+                       order_by = NULL, stringsAsFactors = default.stringsAsFactors()) {
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
   if(!is.null(completed)) {
@@ -74,6 +75,13 @@ get_results = function(uid, api=NULL,
   check_api_response(resp, cont)
 
   parsed = jsonlite::fromJSON(cont)
+
+  parsed$responses$answers <- as.data.frame(
+    lapply(
+      parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors)
+      ), stringsAsFactors = FALSE
+  )
+
   structure(
     list(
       stats = parsed$stats,
