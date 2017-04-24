@@ -7,20 +7,23 @@
 get_all_typeforms(api = NULL)
 }
 \arguments{
-\item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL}
-we use the environment variable \code{Sys.getenv("typeform_api")}.}
+\item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
+the environment variable \code{Sys.getenv("typeform_api")} is used.}
 }
 \value{
 A list containing content and the response.
 }
 \description{
-This function returns a data frame containing your typeforms and their
-associated UIDs.
+This function returns a two column data frame containing the typeform names and
+their associated ids.
 }
 \examples{
 \dontrun{
 api = "XXXXX"
 tf = get_all_typeforms(api)
 tf$content
+
+## Use the system variable
+get_all_typeforms()
 }
 }

@@ -11,8 +11,8 @@ get_results(uid, api = NULL, completed = NULL, since = NULL,
 \arguments{
 \item{uid}{The UID (unique identifier) of the typeform you want the results for.}
 
-\item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL}
-we use the environment variable \code{Sys.getenv("typeform_api")}.}
+\item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
+the environment variable \code{Sys.getenv("typeform_api")} is used.}
 
 \item{completed, }{default \code{NULL}, return all results.
 Fetch only completed results (\code{TRUE}), or only not-completed results
