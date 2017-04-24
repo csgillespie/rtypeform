@@ -39,7 +39,8 @@ get_order_by = function(order_by) {
 #' If \code{NULL} return all results.
 #' @param order_by One of "completed", "date_land_desc", "date_land_incr",
 #' "date_submit_desc", or "date_submit_incr".
-#' @param stringsAsFactors See \code{\link{default.stringsAsFactors}}
+#' @param stringsAsFactors default \code{FALSE}. When converting response, should
+#' characters be treated as factors.
 #' @return A list containing questions, stats, responses and http response.
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
@@ -52,11 +53,14 @@ get_order_by = function(order_by) {
 #' results$questions
 #' results$responses
 #' }
-get_results = function(uid, api=NULL,
-                       completed=NULL, since=NULL, until=NULL, offset=NULL, limit=NULL,
-                       order_by = NULL, stringsAsFactors = default.stringsAsFactors()) {
+get_results = function(uid, api = NULL,
+                       completed = NULL, since = NULL, until = NULL, offset = NULL,
+                       limit = NULL, order_by = NULL,
+                       stringsAsFactors = FALSE) {
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
+
+  ## Argument checking
   if(!is.null(completed)) {
     if(isTRUE(completed)) url = paste0(url, "&completed=true")
     else url = paste0(url, "&completed=false")
@@ -67,6 +71,7 @@ get_results = function(uid, api=NULL,
   if(!is.null(offset)) url = paste0(url, "&offset=", offset)
   if(!is.null(limit)) url = paste0(url, "&limit=", limit)
 
+  ## Form the REST URL & query
   url = paste0(url , get_order_by(order_by))
 
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
@@ -76,12 +81,14 @@ get_results = function(uid, api=NULL,
 
   parsed = jsonlite::fromJSON(cont)
 
-  parsed$responses$answers <- as.data.frame(
+  ## Convert arguments
+  parsed$responses$answers = as.data.frame(
     lapply(
       parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors)
       ), stringsAsFactors = FALSE
   )
 
+  ## Return object
   structure(
     list(
       stats = parsed$stats,
