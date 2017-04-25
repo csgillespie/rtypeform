@@ -1,5 +1,7 @@
 test_that("Testing get_all_typeforms", {
   skip_on_cran()
+  if(Sys.getenv("TRAVIS_PULL_REQUEST") != "false") return(invisible(TRUE))
+
   typeforms = get_all_typeforms()
   expect_equal(ncol(typeforms$content), 2)
 }
