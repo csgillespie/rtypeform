@@ -42,6 +42,7 @@ get_order_by = function(order_by) {
 #' @param stringsAsFactors default \code{FALSE}. When converting response, should
 #' characters be treated as factors.
 #' @return A list containing questions, stats, responses and http response.
+#' @importFrom utils type.convert
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
 #' @examples
