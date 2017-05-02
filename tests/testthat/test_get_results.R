@@ -1,13 +1,13 @@
 test_that("Testing get_results_typeforms", {
   skip_on_cran()
-  if(Sys.getenv("TRAVIS_PULL_REQUEST") != "false") return(invisible(TRUE))
+  if(nchar(Sys.getenv("typeform_api")) == 0) return(invisible(TRUE))
   uid = "COBOws"
   res = get_results(uid)
   expect_true(is.list(res))
   expect_true(is.list(res$stats))
   expect_true(is.data.frame(res$questions))
-  expect_true(is.data.frame(res$completed_responses))
-  expect_true(is.data.frame(res$uncompleted_responses))
+  expect_true(is.data.frame(res$completed))
+  expect_true(is.data.frame(res$uncompleted))
 
   no_completed = res$stats$completed
   total = res$stats$total
