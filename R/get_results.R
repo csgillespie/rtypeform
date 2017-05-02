@@ -13,7 +13,7 @@ get_order_by = function(order_by) {
     stop("order_by should be one of:\n", paste(order_bys, collapse = "\n"))
 
   end = switch(order_by,
-               completed="completed",
+               completed = "completed",
                date_land_desc = "[date_land,desc]",
                date_land_incr = "date_land",
                date_submit_desc = "[date_submit,desc]",
@@ -39,10 +39,9 @@ get_order_by = function(order_by) {
 #' If \code{NULL} return all results.
 #' @param order_by One of "completed", "date_land_desc", "date_land_incr",
 #' "date_submit_desc", or "date_submit_incr".
-#' @param stringsAsFactors default \code{FALSE}. When converting response, should
-#' characters be treated as factors.
-#' @return A list containing questions, stats, responses and http response.
-#' @importFrom utils type.convert
+#' @return A list containing questions, stats, completed responses,
+#' and uncompleted responses and http status.
+#' @importFrom purrr flatten_df map_df keep
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
 #' @examples
@@ -56,8 +55,7 @@ get_order_by = function(order_by) {
 #' }
 get_results = function(uid, api = NULL,
                        completed = NULL, since = NULL, until = NULL, offset = NULL,
-                       limit = NULL, order_by = NULL,
-                       stringsAsFactors = FALSE) {
+                       limit = NULL, order_by = NULL) {
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
 
@@ -80,22 +78,24 @@ get_results = function(uid, api = NULL,
   cont = httr::content(resp, "text")
   check_api_response(resp, cont)
 
-  parsed = jsonlite::fromJSON(cont)
+  parsed = jsonlite::fromJSON(cont, simplifyVector = FALSE)
 
-  ## Convert arguments
-  parsed$responses$answers = as.data.frame(
-    lapply(
-      parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors)
-      ), stringsAsFactors = FALSE
-  )
+  questions = purrr::map_df(parsed$questions, purrr::flatten_df)
+
+  q_keep = purrr::keep(parsed$responses, ~.$completed ==1)
+  completed = purrr::map_df(q_keep, purrr::flatten_df)
+
+  q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
+  uncompleted = purrr::map_df(q_keep, purrr::flatten_df)
 
   ## Return object
   structure(
     list(
-      stats = parsed$stats,
-      questions = parsed$questions,
-      responses = parsed$responses,
-      response = resp
+      http_status = parsed$http_status,
+      stats=parsed$stats$responses,
+      questions = questions,
+      completed = completed,
+      uncompleted = uncompleted
     ),
     class = "rtypeform_results"
   )

@@ -1,3 +1,7 @@
+# Version 0.3.0
+  * Breaking changes to the API. `get_results()` now returns a list with http_stats, 
+    question stats, questions, completed, and uncompleted (thanks to @hrbrmstr).
+
 # Version 0.2.1
   * Adding automatic type conversion in the `get_results()` function (thanks to @1beb).
 

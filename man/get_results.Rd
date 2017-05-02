@@ -5,8 +5,7 @@
 \title{Download questionnaire results}
 \usage{
 get_results(uid, api = NULL, completed = NULL, since = NULL,
-  until = NULL, offset = NULL, limit = NULL, order_by = NULL,
-  stringsAsFactors = FALSE)
+  until = NULL, offset = NULL, limit = NULL, order_by = NULL)
 }
 \arguments{
 \item{uid}{The UID (unique identifier) of the typeform you want the results for.}
@@ -32,12 +31,10 @@ If \code{NULL} return all results.}
 
 \item{order_by}{One of "completed", "date_land_desc", "date_land_incr",
 "date_submit_desc", or "date_submit_incr".}
-
-\item{stringsAsFactors}{default \code{FALSE}. When converting response, should
-characters be treated as factors.}
 }
 \value{
-A list containing questions, stats, responses and http response.
+A list containing questions, stats, completed responses,
+and uncompleted responses and http status.
 }
 \description{
 Download results for a particular typeform questionnaire.
