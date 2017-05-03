@@ -4,7 +4,7 @@ API to typeform data sets
 
 [![Build Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform) [![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform) [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
-[Typeform](https://typeform.com) is a company that specialises in online form building. This R package allows users to download their form results through the exposed API.
+[Typeform](http://referral.typeform.com/mzcsnTI) is a company that specialises in online form building. This R package allows users to download their form results through the exposed API.
 
 Installation
 ------------
