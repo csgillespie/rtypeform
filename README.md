@@ -43,7 +43,7 @@ You can download data from a particular typeform via
 
 ``` r
 ## uid can be obtained from the typeforms data set above
-get_results(uid, api)
+get_questionnaire(uid, api)
 ```
 
 There are a number of options for downloading the data. For example
@@ -52,7 +52,7 @@ There are a number of options for downloading the data. For example
 ## Only completed forms
 get_results(uid, api, completed=TRUE)
 ## Results since the 1st Jan
-get_results(uid, api, since=as.Date("2016-01-01"))
+get_results(uid, api, since = as.Date("2016-01-01"))
 ```
 
 See the `?get_results` help page for other options.

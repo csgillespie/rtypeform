@@ -1,8 +1,8 @@
-test_that("Testing get_results_typeforms", {
+test_that("Testing get_questionnaire_typeforms", {
   skip_on_cran()
   if(nchar(Sys.getenv("typeform_api")) == 0) return(invisible(TRUE))
   uid = "COBOws"
-  res = get_results(uid)
+  res = get_questionnaire(uid)
   expect_true(is.list(res))
   expect_true(is.list(res$stats))
   expect_true(is.data.frame(res$questions))
@@ -15,10 +15,10 @@ test_that("Testing get_results_typeforms", {
   ## Completed results
   Sys.sleep(1)# rate limit
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total)
-  res = get_results(uid, completed = FALSE)
+  res = get_questionnaire(uid, completed = FALSE)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - no_completed)
 
-  res = get_results(uid, completed = TRUE)
+  res = get_questionnaire(uid, completed = TRUE)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), no_completed)
 
   ## since = NULL, until = NULL,
@@ -28,12 +28,12 @@ test_that("Testing get_results_typeforms", {
   ## offset = NULL
   Sys.sleep(1)# rate limit
   offset = 5
-  res = get_results(uid, offset = offset)
+  res = get_questionnaire(uid, offset = offset)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - offset)
 
   ## limit = NULL
   limit = 5
-  res = get_results(uid, limit = limit)
+  res = get_questionnaire(uid, limit = limit)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), limit)
 
   ## order_by = NULL
