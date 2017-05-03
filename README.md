@@ -50,26 +50,26 @@ There are a number of options for downloading the data. For example
 
 ``` r
 ## Only completed forms
-get_results(uid, api, completed=TRUE)
+get_questionnaire(uid, api, completed = TRUE)
 ## Results since the 1st Jan
-get_results(uid, api, since = as.Date("2016-01-01"))
+get_questionnaire(uid, api, since = as.Date("2016-01-01"))
 ```
 
-See the `?get_results` help page for other options.
+See the `?get_questionnaire()` help page for other options.
 
 Example: Multiple Filters / Order
 ---------------------------------
 
 Imagine we only want to fetch only the last 10 completed responses.
 
--   We only want completed results, so we add the parameter `completed=TRUE`.
--   The results need to be ordered by newest results first, so we add the parameter `order_by="date_submit_desc"`
+-   We only want completed results, so we add the parameter `completed = TRUE`.
+-   The results need to be ordered by newest results first, so we add the parameter `order_by = "date_submit_desc"`
 -   We only want 10 results maximum, so we add the parameter `limit=10`
 
 This gives the function call
 
 ``` r
-get_results(uid, api, completed=TRUE, order_by="date_submit_desc", limit=10)
+get_questionnaire(uid, api, completed=TRUE, order_by="date_submit_desc", limit=10)
 ```
 
 Other information
