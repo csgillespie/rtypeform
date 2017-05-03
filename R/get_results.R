@@ -1,6 +1,6 @@
 get_linux_time = function(x) {
   if(class(x) == "Date") x = as.POSIXct(x)
-  if(any(class(x) %in% c("POSIXct","POSIXt"))) x = as.numeric(x)
+  if(any(class(x) %in% c("POSIXct", "POSIXt"))) x = as.numeric(x)
   x
 }
 
@@ -77,14 +77,16 @@ get_results = function(uid, api = NULL,
   resp = httr::GET(url, ua)
   cont = httr::content(resp, "text")
   check_api_response(resp, cont)
-
   parsed = jsonlite::fromJSON(cont, simplifyVector = FALSE)
 
+  ## Extract questions
   questions = purrr::map_df(parsed$questions, purrr::flatten_df)
 
-  q_keep = purrr::keep(parsed$responses, ~.$completed ==1)
+  ## Extract completed
+  q_keep = purrr::keep(parsed$responses, ~.$completed == 1)
   completed = purrr::map_df(q_keep, purrr::flatten_df)
 
+  ## Extract non-completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
   uncompleted = purrr::map_df(q_keep, purrr::flatten_df)
 
@@ -92,7 +94,7 @@ get_results = function(uid, api = NULL,
   structure(
     list(
       http_status = parsed$http_status,
-      stats=parsed$stats$responses,
+      stats = parsed$stats$responses,
       questions = questions,
       completed = completed,
       uncompleted = uncompleted
