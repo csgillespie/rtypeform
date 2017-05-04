@@ -32,12 +32,6 @@ The package can be installed from CRAN
 install.packages("rtypeform")
 ```
 
-or you can install the development version via `devtools`
-
-```{r eval=FALSE}
-devtools::install_github("csgillespie/rtypeform")
-```
-
 The package can then be loaded in the usual way
 
 ```{r}
@@ -76,16 +70,18 @@ See the `?get_questionnaire()` help page for other options.
 
 ## Example: Multiple Filters / Order
 
-Imagine we only want to fetch only the last 10 completed responses.
+Imagine we only want to fetch the last 10 completed responses.
 
   * We only want completed results, so we add the parameter `completed = TRUE`.
   * The results need to be ordered by newest results first, so we add the parameter `order_by = "date_submit_desc"`
-  * We only want 10 results maximum, so we add the parameter `limit=10`
+  * We only want a maximum of 10 results, so we add the parameter `limit = 10`
   
 This gives the function call
 
 ```{r eval=FALSE}
-get_questionnaire(uid, api, completed=TRUE, order_by="date_submit_desc", limit=10)
+get_questionnaire(uid, api, completed = TRUE, 
+                  order_by = "date_submit_desc", 
+                  limit = 10)
 ```
 
 ## Other information
