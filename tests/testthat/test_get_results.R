@@ -13,7 +13,7 @@ test_that("Testing get_questionnaire_typeforms", {
   total = res$stats$total
 
   ## Completed results
-  Sys.sleep(1)# rate limit
+  Sys.sleep(1.5 + runif(1))# rate limit
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total)
   res = get_questionnaire(uid, completed = FALSE)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - no_completed)
@@ -26,7 +26,7 @@ test_that("Testing get_questionnaire_typeforms", {
 
 
   ## offset = NULL
-  Sys.sleep(1)# rate limit
+  Sys.sleep(1.5 + runif(1))# rate limit
   offset = 5
   res = get_questionnaire(uid, offset = offset)
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - offset)
