@@ -13,5 +13,5 @@ License: GPL-2 | GPL-3
 LazyData: TRUE
 Imports:
     jsonlite, httr, purrr, utils
-Suggests: testthat, curl
+Suggests: testthat, curl, dplyr
 RoxygenNote: 6.0.1
