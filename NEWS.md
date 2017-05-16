@@ -1,3 +1,6 @@
+# Version 0.3.1
+  * Improved error messages for http status codes
+
 # Version 0.3.0
   * Breaking changes to the API. `get_results()` now depreciated. 
   Instead, use `get_questionnaire()`. This returns a list with http_status, 
