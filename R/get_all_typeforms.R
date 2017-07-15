@@ -31,8 +31,8 @@ get_all_typeforms = function(api=NULL) {
   structure(
     list(
       content = jsonlite::fromJSON(cont),
-      response = resp
+      http_status = 200 ## Must be 200 otherwise error
     ),
-    class = "rtypeform_all_typeforms"
+    class = "rtypeform_all"
   )
 }

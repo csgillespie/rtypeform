@@ -1,5 +1,6 @@
 # Version 0.3.1
-  * Improved error messages for http status codes
+  * Improved error messages for http status codes.
+  * More consistent response with `get_questionnaire()` and `get_typeforms()`.
 
 # Version 0.3.0
   * Breaking changes to the API. `get_results()` now depreciated. 

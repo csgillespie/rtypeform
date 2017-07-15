@@ -3,11 +3,11 @@ check_api_response = function(resp, cont) {
   if(status_code == 200) return(invisible(NULL))
 
   msg = if(status_code == 400) {
-    "Invalid date in query"
+    "400: Invalid date in query"
   } else if(status_code == 403) {
-    "Expired token, invalid token, or token does not have access permission"
+    "403: Expired token, invalid token, or token does not have access permission"
   } else if(status_code == 404) {
-    "Type in URL/ Invalid typeform id"
+    "404: Type in URL/ Invalid typeform id"
   } else {
     sprintf("rtypeform API request failed [%s]\n",
             status_code)
