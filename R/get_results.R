@@ -71,7 +71,7 @@ get_questionnaire = function(uid, api = NULL,
   if(!is.null(limit)) url = paste0(url, "&limit=", limit)
 
   ## Form the REST URL & query
-  url = paste0(url , get_order_by(order_by))
+  url = paste0(url, get_order_by(order_by))
 
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
   resp = httr::GET(url, ua)
