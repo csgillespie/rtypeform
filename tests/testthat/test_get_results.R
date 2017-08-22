@@ -37,6 +37,7 @@ test_that("Testing get_questionnaire_typeforms", {
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), limit)
 
   ## order_by = NULL
+  expect_error(get_questionnaire(uid, order_by = "XXXX"))
 
 
   }
