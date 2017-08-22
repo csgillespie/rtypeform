@@ -1,4 +1,4 @@
-check_api_response = function(resp, cont) {
+check_api_response = function(resp) {
   status_code = httr::status_code(resp)
   if(status_code == 200) return(invisible(NULL))
 

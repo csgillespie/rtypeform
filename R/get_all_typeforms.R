@@ -25,7 +25,7 @@ get_all_typeforms = function(api=NULL) {
   cont = httr::content(resp, "text")
 
   # Sanity check
-  check_api_response(resp, cont)
+  check_api_response(resp)
 
   # The returned object
   structure(

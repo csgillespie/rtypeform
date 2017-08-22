@@ -76,7 +76,7 @@ get_questionnaire = function(uid, api = NULL,
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
   resp = httr::GET(url, ua)
   cont = httr::content(resp, "text")
-  check_api_response(resp, cont)
+  check_api_response(resp)
   parsed = jsonlite::fromJSON(cont, simplifyVector = FALSE)
 
   ## Extract questions
@@ -133,7 +133,7 @@ get_results = function(uid, api = NULL,
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform") #nocov
   resp = httr::GET(url, ua) #nocov
   cont = httr::content(resp, "text") #nocov
-  check_api_response(resp, cont) #nocov
+  check_api_response(resp) #nocov
 
   parsed = jsonlite::fromJSON(cont) #nocov
 
