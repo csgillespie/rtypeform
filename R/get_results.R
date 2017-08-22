@@ -112,48 +112,48 @@ get_results = function(uid, api = NULL,
                        completed = NULL, since = NULL, until = NULL, offset = NULL,
                        limit = NULL, order_by = NULL,
                        stringsAsFactors = FALSE) {
-  .Deprecated("get_questionnaire")
-  api = get_api(api)
-  url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
+  .Deprecated("get_questionnaire") #nocov
+  api = get_api(api) #nocov
+  url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api) #nocov
 
   ## Argument checking
-  if(!is.null(completed)) {
-    if(isTRUE(completed)) url = paste0(url, "&completed=true")
-    else url = paste0(url, "&completed=false")
-  }
+  if(!is.null(completed)) { #nocov
+    if(isTRUE(completed)) url = paste0(url, "&completed=true") #nocov
+    else url = paste0(url, "&completed=false") #nocov
+  } #nocov
 
-  if(!is.null(since)) url = paste0(url, "&since=", get_linux_time(since))
-  if(!is.null(until)) url = paste0(url, "&until=", get_linux_time(until))
-  if(!is.null(offset)) url = paste0(url, "&offset=", offset)
-  if(!is.null(limit)) url = paste0(url, "&limit=", limit)
+  if(!is.null(since)) url = paste0(url, "&since=", get_linux_time(since))  #nocov
+  if(!is.null(until)) url = paste0(url, "&until=", get_linux_time(until)) #nocov
+  if(!is.null(offset)) url = paste0(url, "&offset=", offset) #nocov
+  if(!is.null(limit)) url = paste0(url, "&limit=", limit) #nocov
 
   ## Form the REST URL & query
-  url = paste0(url , get_order_by(order_by))
+  url = paste0(url , get_order_by(order_by)) #nocov
 
-  ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
-  resp = httr::GET(url, ua)
-  cont = httr::content(resp, "text")
-  check_api_response(resp, cont)
+  ua = httr::user_agent("https://github.com/csgillespie/rtypeform") #nocov
+  resp = httr::GET(url, ua) #nocov
+  cont = httr::content(resp, "text") #nocov
+  check_api_response(resp, cont) #nocov
 
-  parsed = jsonlite::fromJSON(cont)
+  parsed = jsonlite::fromJSON(cont) #nocov
 
   ## Convert arguments
-  parsed$responses$answers = as.data.frame(
-    lapply(
-      parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors)
-    ), stringsAsFactors = FALSE
-  )
+  parsed$responses$answers = as.data.frame( #nocov
+    lapply( #nocov
+      parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors) #nocov
+    ), stringsAsFactors = FALSE #nocov
+  )  #nocov
 
   ## Return object
-  structure(
-    list(
-      stats = parsed$stats,
-      questions = parsed$questions,
-      responses = parsed$responses,
-      response = resp
-    ),
-    class = "rtypeform_results"
-  )
+  structure( #nocov
+    list(#nocov
+      stats = parsed$stats, #nocov
+      questions = parsed$questions, #nocov
+      responses = parsed$responses, #nocov
+      response = resp #nocov
+    ), #nocov
+    class = "rtypeform_results" #nocov
+  )  #nocov
 }
 
 
