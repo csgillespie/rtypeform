@@ -21,6 +21,21 @@ get_order_by = function(order_by) {
   paste0("&order_by=", end)
 }
 
+# For uncompleted, questions aren't returned, so questions == NULL
+check_empty = function(responses, questions = NULL) {
+
+  if(NCOL(responses) == 0) { # Handle edge case of no responses
+    q = questions$id
+    q = q[!grepl("group_", q)] # Remove group labels
+    col_names = c("token", "completed", "browser", "platform",
+                  "date_land", "date_submit", "user_agent",
+                  "referer", "network_id", q)
+
+    responses = tibble::as_tibble(read.csv(text=paste(col_names, collapse = ",")))
+  }
+  responses
+}
+
 #' Download questionnaire results
 #'
 #' Download results for a particular typeform questionnaire.
@@ -42,6 +57,8 @@ get_order_by = function(order_by) {
 #' @return A list containing questions, stats, completed responses,
 #' and uncompleted responses and http status.
 #' @importFrom purrr flatten_df map_df keep
+#' @importFrom utils read.csv
+#' @importFrom tibble as_tibble
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
 #' @examples
@@ -54,8 +71,8 @@ get_order_by = function(order_by) {
 #' results$responses
 #' }
 get_questionnaire = function(uid, api = NULL,
-                       completed = NULL, since = NULL, until = NULL, offset = NULL,
-                       limit = NULL, order_by = NULL) {
+                             completed = NULL, since = NULL, until = NULL, offset = NULL,
+                             limit = NULL, order_by = NULL) {
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
 
@@ -85,10 +102,12 @@ get_questionnaire = function(uid, api = NULL,
   ## Extract completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 1)
   completed = purrr::map_df(q_keep, purrr::flatten_df)
+  completed = check_empty(completed, questions)
 
   ## Extract non-completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
   uncompleted = purrr::map_df(q_keep, purrr::flatten_df)
+  uncompleted = check_empty(uncompleted, NULL)
 
   ## Return object
   structure(
