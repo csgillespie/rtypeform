@@ -1,3 +1,6 @@
+# Version 0.3.2
+  * Bug fix: Return an empty data frame when there are no completed responses.
+
 # Version 0.3.1
   * Improved error messages for http status codes.
   * More consistent response with `get_questionnaire()` and `get_typeforms()`.
