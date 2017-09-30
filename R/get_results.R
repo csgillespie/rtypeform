@@ -36,6 +36,25 @@ check_empty = function(responses, questions = NULL) {
   responses
 }
 
+#' @importFrom purrr map
+split_hidden = function(responses, questions) {
+
+  ## Check for NULL responses
+  hidden = map(responses, "hidden") %>%
+    map(
+      function(element)
+        map(element, function(element) {element[is.null(element)] = NA; element})
+    ) %>%
+    purrr::map_df(purrr::flatten_df)
+
+  res = map(responses, function(element) element[names(element) != "hidden"]) %>%
+    purrr::map_df(purrr::flatten_df)
+
+  if(NROW(hidden) > 0)
+    res = cbind(res, hidden)
+  check_empty(res, questions)
+}
+
 #' Download questionnaire results
 #'
 #' Download results for a particular typeform questionnaire.
@@ -59,6 +78,7 @@ check_empty = function(responses, questions = NULL) {
 #' @importFrom purrr flatten_df map_df keep
 #' @importFrom utils read.csv
 #' @importFrom tibble as_tibble
+#' @importFrom purrr %>%
 #' @seealso https://www.typeform.com/help/data-api/
 #' @export
 #' @examples
@@ -101,13 +121,11 @@ get_questionnaire = function(uid, api = NULL,
 
   ## Extract completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 1)
-  completed = purrr::map_df(q_keep, purrr::flatten_df)
-  completed = check_empty(completed, questions)
+  completed  = split_hidden(q_keep, questions)
 
   ## Extract non-completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
-  uncompleted = purrr::map_df(q_keep, purrr::flatten_df)
-  uncompleted = check_empty(uncompleted, NULL)
+  uncompleted  = split_hidden(q_keep, NULL)
 
   ## Return object
   structure(
