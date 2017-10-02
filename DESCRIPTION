@@ -1,7 +1,7 @@
 Package: rtypeform
 Type: Package
 Title: Interface to 'typeform' Results
-Version: 0.3.1.0002
+Version: 0.3.2
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
