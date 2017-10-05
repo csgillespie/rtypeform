@@ -28,16 +28,33 @@ To use this package, you will need a [data API](https://www.typeform.com/help/da
 
 ``` r
 api = "XXXXX"
-typeforms = get_all_typeforms(api)
+typeforms = get_typeforms(api)
+typeforms$content
 ```
 
-If you don't pass your `api` key as an argument, it will attempt to read the variable `Sys.getenv("typeform_api")`.
+If you don't pass your `api` key as an argument, it will attempt to read the variable `typeform_api` from your `.Renviron` file, via `Sys.getenv("typeform_api")`. If this variable is set correctly, then you can **omit** the `api` argument
+
+``` r
+typeforms = get_typeforms()
+```
+
+In all function calls below, the `api` argument can be ommitted if the environment variable is set (see Efficient R programming [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron) for more details).
 
 You can download data from a particular typeform via
 
 ``` r
+# Most recent typeform
+uid = typeforms$content$uid[1]
 ## uid can be obtained from the typeforms data set above
-get_questionnaire(uid, api)
+q = get_questionnaire(uid, api)
+```
+
+The object `q` contains a few useful components,
+
+``` r
+q$questions
+q$completed
+q$uncompleted
 ```
 
 There are a number of options for downloading the data. For example
@@ -45,6 +62,7 @@ There are a number of options for downloading the data. For example
 ``` r
 ## Only completed forms
 get_questionnaire(uid, api, completed = TRUE)
+
 ## Results since the 1st Jan
 get_questionnaire(uid, api, since = as.Date("2016-01-01"))
 ```
@@ -63,7 +81,9 @@ Imagine we only want to fetch the last 10 completed responses.
 This gives the function call
 
 ``` r
-get_questionnaire(uid, api, completed = TRUE, 
+get_questionnaire(uid, 
+                  api, 
+                  completed = TRUE, 
                   order_by = "date_submit_desc", 
                   limit = 10)
 ```
@@ -73,3 +93,7 @@ Other information
 
 -   If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/rtypeform/issues).
 -   Feel free to submit pull requests.
+
+------------------------------------------------------------------------
+
+Development of this package was supported by [Jumping Rivers](https://www.jumpingrivers.com)

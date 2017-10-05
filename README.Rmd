@@ -2,6 +2,8 @@
 output:
   md_document:
     variant: markdown_github
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -45,16 +47,36 @@ key. With this key in position, you can then list your available forms
 
 ```{r eval=FALSE}
 api = "XXXXX"
-typeforms = get_all_typeforms(api)
+typeforms = get_typeforms(api)
+typeforms$content
 ```
 
 If you don't pass your `api` key as an argument, it will attempt to read the variable
-`Sys.getenv("typeform_api")`.
+`typeform_api` from your `.Renviron` file, via `Sys.getenv("typeform_api")`. If 
+this variable is set correctly, then you can __omit__ the `api` argument
+
+```{r eval=FALSE}
+typeforms = get_typeforms()
+```
+
+In all function calls below, the `api` argument can be ommitted if the environment variable is
+set (see Efficient R programming [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron) for
+more details).
 
 You can download data from a particular typeform via
 ```{r eval=FALSE}
+# Most recent typeform
+uid = typeforms$content$uid[1]
 ## uid can be obtained from the typeforms data set above
-get_questionnaire(uid, api)
+q = get_questionnaire(uid, api)
+```
+
+The object `q` contains a few useful components, 
+
+```{r, eval=FALSE}
+q$questions
+q$completed
+q$uncompleted
 ```
 
 There are a number of options for downloading the data. For example
@@ -62,6 +84,7 @@ There are a number of options for downloading the data. For example
 ```{r eval=FALSE}
 ## Only completed forms
 get_questionnaire(uid, api, completed = TRUE)
+
 ## Results since the 1st Jan
 get_questionnaire(uid, api, since = as.Date("2016-01-01"))
 ```
@@ -79,7 +102,9 @@ Imagine we only want to fetch the last 10 completed responses.
 This gives the function call
 
 ```{r eval=FALSE}
-get_questionnaire(uid, api, completed = TRUE, 
+get_questionnaire(uid, 
+                  api, 
+                  completed = TRUE, 
                   order_by = "date_submit_desc", 
                   limit = 10)
 ```
@@ -88,3 +113,8 @@ get_questionnaire(uid, api, completed = TRUE,
 
  * If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/rtypeform/issues).
  * Feel free to submit pull requests.
+
+---
+
+Development of this package was supported by [Jumping Rivers](https://www.jumpingrivers.com)
+
