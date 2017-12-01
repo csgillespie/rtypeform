@@ -4,6 +4,7 @@ test_that("Testing print method", {
   uid = "COBOws"
   all_typeforms = get_all_typeforms()
   expect_identical(print(all_typeforms), all_typeforms)
+  Sys.sleep(2)
   res = get_questionnaire(uid)
   expect_identical(print(res), res)
 
