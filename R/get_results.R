@@ -1,7 +1,6 @@
 get_linux_time = function(x) {
   if(class(x) == "Date") x = as.POSIXct(x)
-  if(any(class(x) %in% c("POSIXct", "POSIXt"))) x = as.numeric(x)
-  x
+  as.integer(x)
 }
 
 get_order_by = function(order_by) {
