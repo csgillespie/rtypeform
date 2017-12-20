@@ -1,3 +1,13 @@
+#' Questionnaire selection
+#'
+#' This rstudio add in is for selecting the appropriate questionnaire from the group of
+#' questionnaires available for a given api key based on matching the questionnaire name
+#' up with the unique id.
+#'
+#' @inheritParams get_typeforms
+#' @import miniUI
+#' @import shiny
+#' @importFrom rstudioapi insertText
 #' @export
 typeformAddin = function(api = NULL){
   # a modified version of get_api since if there is no key stored or provided

@@ -14,6 +14,9 @@ Description: An R interface to the 'typeform' <https://typeform.com> application
 License: GPL-2 | GPL-3
 LazyData: TRUE
 Imports:
-    jsonlite, httr, purrr, utils, tibble
+    jsonlite, httr, purrr, utils, tibble,
+    shiny(>= 1.0.0),
+    miniUI(>= 0.1.1),
+    rstudioapi(>= 0.5)
 Suggests: testthat, curl, dplyr
 RoxygenNote: 6.0.1
