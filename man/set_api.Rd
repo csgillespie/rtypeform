@@ -13,3 +13,8 @@ the environment variable \code{Sys.getenv("typeform_api")} is used.}
 \description{
 A wrapper around \code{Sys.setenv} for setting the typeform api key for the current session.
 }
+\examples{
+\dontrun{
+set_api(api = "XXXX")
+}
+}

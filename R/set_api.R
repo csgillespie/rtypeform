@@ -3,7 +3,7 @@
 #' A wrapper around \code{Sys.setenv} for setting the typeform api key for the current session.
 #'
 #' @inheritParams get_all_typeforms
-#' @example \dontrun{
+#' @examples \dontrun{
 #' set_api(api = "XXXX")
 #' }
 #' @export
