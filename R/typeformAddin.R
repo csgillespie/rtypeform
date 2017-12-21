@@ -6,7 +6,6 @@
 #'
 #' @inheritParams get_typeforms
 #' @importFrom rstudioapi insertText
-#' @export
 typeformAddin = function(api = NULL){
   if(!requireNamespace("shiny") || !requireNamespace("miniUI") )
     stop("This add in requires that both shiny and miniUI are installed.")
@@ -24,20 +23,20 @@ typeformAddin = function(api = NULL){
     is_form = is_formlist(forms)
   }
 
-  ui = miniPage(
-    gadgetTitleBar("Typeform Responses"),
-    miniContentPanel(uiOutput("ui"))
+  ui = miniUI::miniPage(
+    miniUI::gadgetTitleBar("Typeform Responses"),
+    miniUI::miniContentPanel(shiny::uiOutput("ui"))
   )
 
   server = function(input,output,session){
 
-    rvs = reactiveValues(
+    rvs = shiny::reactiveValues(
       api_flag = api_flag,
       api = api,
       forms = forms,
       is_form = is_form
     )
-    output$ui = renderUI({
+    output$ui = shiny::renderUI({
       ## 3 cases to take care of,
       ## 1) no api key
       ## 2) bad api key
@@ -45,59 +44,57 @@ typeformAddin = function(api = NULL){
 
       ## 1)
       if(!rvs$api_flag){ ## show a text box for api key
-        return(div(
-          wellPanel(
-            textInput("api_key", "Please enter an API key")
+        return(shiny::div(
+          shiny::wellPanel(
+            shiny::textInput("api_key", "Please enter an API key")
           ),
-          miniButtonBlock(
-            actionButton("api_submit", "Submit")
+          miniUI::miniButtonBlock(
+            shiny::actionButton("api_submit", "Submit")
           )
         ))
       }
 
       ## 2)
       else if(!rvs$is_form){
-          div(
-            h2("The provided api key did not give a suitable response.") , br(),
-            wellPanel(
-              textInput("api_key", "Please enter an API key")
-            ),
-            miniButtonBlock(
-              actionButton("api_submit", "Submit")
-            )
+        shiny::div(
+          shiny::h2("The provided api key did not give a suitable response.") ,
+          shiny::br(),
+          shiny::wellPanel(
+            shiny::textInput("api_key", "Please enter an API key")
+          ),
+          miniUI::miniButtonBlock(
+            shiny::actionButton("api_submit", "Submit")
           )
+        )
       }
 
       ## 3)
       else{
-        div(
-
-          p("Choose a questionnaire and a name to assign it to. Click done in the top right
+        shiny::div(
+          shiny::p("Choose a questionnaire and a name to assign it to. Click done in the top right
                                to put put the code into the editor."),
-          fillRow(
-            wellPanel(
-              selectInput("form_select",label = "Typeform questionnaires",
-                          choices = rvs$forms$content$name)
+          shiny::fillRow(
+            shiny::wellPanel(
+              shiny::selectInput("form_select",label = "Typeform questionnaires",
+                                 choices = rvs$forms$content$name)
             ),
-            wellPanel(
-              textInput("qname", label = "Variable name", value = "tform")
+            shiny::wellPanel(
+              shiny::textInput("qname", label = "Variable name", value = "tform")
             )
-          )#,
-          # selectInput("completed_par", "Completed", choices = c("All","Completed","Uncompleted"))
-
+          )
         )
       }
     })
 
 
-    observeEvent(input$api_submit,{
+    shiny::observeEvent(input$api_submit,{
       api = input$api_key
       forms = formlist_attempt(api)
       is_form = is_formlist(forms)
 
       if(!is_form){ ## if not a form, means an error, likely invalid key
-        showModal(modalDialog(title = "Error",
-                              p("The request generated an error",br(), forms$message)))
+        shiny::showModal(shiny::modalDialog(title = "Error",
+                                            shiny::p("The request generated an error",shiny::br(), forms$message)))
       }else{
         #if correct, update the apiflag and value
         rvs$api = api
@@ -107,18 +104,19 @@ typeformAddin = function(api = NULL){
       }
     })
 
-    observeEvent(input$done,{
+    shiny::observeEvent(input$done,{
       if(rvs$is_form){
-        rstudioapi::insertText(text = paste0(input$qname, ' = get_questionnaire(uid = "',
-                                             rvs$forms$content$uid[rvs$forms$content$name == input$form_select],
-                                             '", api = "', rvs$api, '")'))
+        rstudioapi::insertText(
+          text = paste0(input$qname, ' = get_questionnaire(uid = "',
+                        rvs$forms$content$uid[rvs$forms$content$name == input$form_select],
+                        '", api = "', rvs$api, '")'))
       }
-      stopApp()
+      shiny::stopApp()
     })
   }
 
-  viewer = paneViewer(300)
-  runGadget(ui,server,viewer = viewer)
+  viewer = shiny::paneViewer(300)
+  shiny::runGadget(ui,server,viewer = viewer)
 }
 
 formlist_attempt = function(api){
