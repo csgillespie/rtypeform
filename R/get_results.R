@@ -1,3 +1,17 @@
+fix_columns = function(questions, completed){
+  bool = questions$id %in% colnames(completed)
+  if(all(bool)) return(completed)
+  # identify missing questions in results set
+  ix = which(!bool)
+  ## annoyingly if the data frame has no rows you can't just add a new column,
+  #hence the need to repeat(NA)
+  completed[questions$id[ix]] = if(nrow(completed) == 0) rep(NA, 0) else NA
+  # rearrange column entries such that they match question order
+  order_ix = match(questions$id, colnames(completed))
+  reorder = c(setdiff(seq_along(completed), order_ix),order_ix)
+  completed[,reorder,drop=FALSE]
+}
+
 get_linux_time = function(x) {
   if(class(x) == "Date") x = as.POSIXct(x)
   as.integer(x)
@@ -121,6 +135,13 @@ get_questionnaire = function(uid, api = NULL,
   ## Extract completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 1)
   completed  = split_hidden(q_keep, questions)
+
+  ## one irritating issue was that if an answer has not been used yet,
+  ## the column will be omitted from the resultant data frame. This makes
+  ## an inconsistency when reasoning on the data frame. Prime culprit for
+  ## this is yes/no other questions where typeform treats this as two separate
+  ## answers. fix below
+  completed = fix_columns(questions,completed)
 
   ## Extract non-completed
   q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
