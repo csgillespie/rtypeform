@@ -5,9 +5,8 @@
 #' up with the unique id.
 #'
 #' @inheritParams get_typeforms
-#' @importFrom rstudioapi insertText
 typeformAddin = function(api = NULL){
-  if(!requireNamespace("shiny") || !requireNamespace("miniUI") )
+  if(!requireNamespace("shiny") || !requireNamespace("miniUI") || !requireNamespace("rstudioapi"))
     stop("This add in requires that both shiny and miniUI are installed.")
   # a modified version of get_api since if there is no key stored or provided
   # we want the user to be able to enter one.
