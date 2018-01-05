@@ -13,7 +13,7 @@ fix_columns = function(questions, completed){
 }
 
 get_linux_time = function(x) {
-  if(class(x) == "Date") x = as.POSIXct(x)
+  if(inherits(x,"Date")) x = as.POSIXct(x)
   as.integer(x)
 }
 
