@@ -1,216 +1,133 @@
-fix_columns = function(questions, completed){
-  bool = questions$id %in% colnames(completed)
-  if(all(bool)) return(completed)
-  # identify missing questions in results set
-  ix = which(!bool)
-  ## annoyingly if the data frame has no rows you can't just add a new column,
-  #hence the need to repeat(NA)
-  completed[questions$id[ix]] = if(nrow(completed) == 0) rep(NA, 0) else NA
-  # rearrange column entries such that they match question order
-  order_ix = match(questions$id, colnames(completed))
-  reorder = c(setdiff(seq_along(completed), order_ix),order_ix)
-  completed[,reorder,drop=FALSE]
+flatten_answers = function(a) {
+  tibs = map(a, as_tibble)
+  tibs %>%
+    map2(names(tibs), function(i, j) {colnames(i) = paste0(j, "_", colnames(i)); i}) %>%
+    bind_cols()
 }
 
-get_linux_time = function(x) {
-  if(inherits(x,"Date")) x = as.POSIXct(x)
-  as.integer(x)
+globalVariables(c("answers", "metadata", "hidden", "calculated",
+                  "landed_at", "submitted_at"))
+get_meta = function(content) {
+  items = content$items
+  meta = items %>%
+    select(-answers, -metadata, -hidden, -calculated) %>%
+    as_tibble() %>%
+    bind_cols(items$metadata, items$hidden, items$calculated) %>%
+    mutate(landed_at = ymd_hms(landed_at),
+           submitted_at = ymd_hms(submitted_at))
+  meta
 }
 
-get_order_by = function(order_by) {
-  if(is.null(order_by)) return("")
-
-  order_bys = c("completed", "date_land_desc", "date_land_incr",
-                "date_submit_desc", "date_submit_incr")
-  if(!(order_by %in% order_bys))
-    stop("order_by should be one of:\n", paste(order_bys, collapse = "\n"))
-
-  end = switch(order_by,
-               completed = "completed",
-               date_land_desc = "[date_land,desc]",
-               date_land_incr = "date_land",
-               date_submit_desc = "[date_submit,desc]",
-               date_submit_incr = "date_submit")
-  paste0("&order_by=", end)
-}
-
-# For uncompleted, questions aren't returned, so questions == NULL
-check_empty = function(responses, questions = NULL) {
-
-  if(NCOL(responses) == 0) { # Handle edge case of no responses
-    q = questions$id
-    q = q[!grepl("group_", q)] # Remove group labels
-    col_names = c("token", "completed", "browser", "platform",
-                  "date_land", "date_submit", "user_agent",
-                  "referer", "network_id", q)
-
-    responses = tibble::as_tibble(read.csv(text=paste(col_names, collapse = ",")))
+#' @importFrom lubridate tz with_tz is.POSIXct ymd_hms
+format_date_time = function(date_time) {
+  if(is.null(date_time)) return(NULL)
+  obj_name = deparse(substitute(date_time))
+  if(!is.POSIXct(date_time)) {
+    stop(obj_name, " is not a date time object", call. = FALSE)
   }
-  responses
+  if(tz(date_time) != "UTC") {
+    message("Converting ", obj_name, "'s timezone to UTZ.")
+    date_time = with_tz(date_time, "UTC")
+  }
+  gsub(pattern = " ", "T", as.character(date_time))
 }
 
-#' @importFrom purrr map
-split_hidden = function(responses, questions) {
-
-  ## Check for NULL responses
-  hidden = map(responses, "hidden") %>%
-    map(
-      function(element)
-        map(element, function(element) {element[is.null(element)] = NA; element})
-    ) %>%
-    purrr::map_df(purrr::flatten_df)
-
-  res = map(responses, function(element) element[names(element) != "hidden"]) %>%
-    purrr::map_df(purrr::flatten_df)
-
-  if(NROW(hidden) > 0)
-    res = cbind(res, hidden)
-  check_empty(res, questions)
+create_argument = function(arg) {
+  if(is.null(arg)) return("")
+  obj_name = deparse(substitute(arg))
+  glue("{obj_name}={arg}")
 }
 
+format_completed = function(completed) {
+  if(is.null(completed)) return(NULL)
+  if(completed) "true" else "false"
+}
+
+globalVariables(".")
 #' Download questionnaire results
 #'
 #' Download results for a particular typeform questionnaire.
-#' @inheritParams get_all_typeforms
-#' @param uid The UID (unique identifier) of the typeform you want the results for.
+#' @inheritParams get_api
+#' @param form_id The form id of the typeform you want the results for.
+#' @param page_size Maximum number of responses.
+#' Default value is 25. Maximum value is 1000.
+#' @param since default \code{NULL}. Fetch only the results after a specific date and
+#' time. If \code{NULL} return all results. This should be a date time object.
+#' The timezone of the object will be converted to UTC.
+#' @param until default \code{NULL}. Similar to \code{since}.
+#' @param after default \code{NULL}. Fetch only the results after a specific date and
+#' time. If \code{NULL} return all results. If you use the after parameter, the responses
+#' will be sorted in the order that our system processed them
+#' (instead of the default order, submitted_at).
+#' This ensures that you can traverse the complete set of responses without repeating entries.
+#' @param before default \code{NULL}. Similar to \code{after}
 #' @param completed default \code{NULL}, return all results.
 #' Fetch only completed results (\code{TRUE}), or only not-completed results
-#' (=\code{FALSE}). If \code{NULL} return all results.
-#' @param since default \code{NULL}. Fetch only the results after a specific date and
-#' time. If \code{NULL} return all results.
-#' @param until default \code{NULL}. Fetch only the results before a specific date and
-#' time. If \code{NULL} return all results.
-#' @param offset Fetch all results except the first \code{offset}.
-#' i.e. Start listing results from result #\code{offset} onwards.
-#' @param limit default \code{NULL}. Fetch only \code{limit} results.
-#' If \code{NULL} return all results.
-#' @param order_by One of "completed", "date_land_desc", "date_land_incr",
-#' "date_submit_desc", or "date_submit_incr".
-#' @return A list containing questions, stats, completed responses,
-#' and uncompleted responses and http status.
+#' (=\code{FALSE}). If \code{NULL} return all results. Warning. It's not
+#' possible to determine completed/non-completed results.
+#' @param query Limit request to only responses that that include the specified term.
+#' @param fields Not implemented. Pull requests welcome
+#' @return A list. The first value is meta imformation. Subsequent elements are
+#' questions..
 #' @importFrom purrr flatten_df map_df keep
 #' @importFrom utils read.csv
 #' @importFrom tibble as_tibble
 #' @importFrom purrr %>%
-#' @seealso https://www.typeform.com/help/data-api/
+#' @seealso https://developer.typeform.com/responses/reference/retrieve-responses/
 #' @export
-#' @examples
-#' \dontrun{
-#' uid = "XXXX"
-#' api = "YYYY"
-#' results = get_results(uid, api)
-#' results$stats
-#' results$questions
-#' results$responses
-#' }
-get_questionnaire = function(uid, api = NULL,
-                             completed = NULL, since = NULL, until = NULL, offset = NULL,
-                             limit = NULL, order_by = NULL) {
-  api = get_api(api)
-  url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
+get_answers = function(form_id, api = NULL,
+                       page_size = 25,
+                       since = NULL, until = NULL, after = NULL, before = NULL,
+                       completed = NULL, query = NULL, fields = NULL) {
+  # Format dates
+  since = format_date_time(since)
+  until = format_date_time(until)
+  after = format_date_time(after)
+  before = format_date_time(before)
 
-  ## Argument checking
-  if(!is.null(completed)) {
-    if(isTRUE(completed)) url = paste0(url, "&completed=true")
-    else url = paste0(url, "&completed=false")
-  }
+  # Format complete
+  completed = format_completed(completed)
 
-  if(!is.null(since)) url = paste0(url, "&since=", get_linux_time(since))
-  if(!is.null(until)) url = paste0(url, "&until=", get_linux_time(until))
-  if(!is.null(offset)) url = paste0(url, "&offset=", offset)
-  if(!is.null(limit)) url = paste0(url, "&limit=", limit)
+  # Construct REST points
+  page_size = create_argument(page_size)
+  since = create_argument(since)
+  until = create_argument(until)
+  after = create_argument(after)
+  before = create_argument(before)
+  completed = create_argument(completed)
+  query = create_argument(query)
+  fields = create_argument(fields)
 
-  ## Form the REST URL & query
-  url = paste0(url, get_order_by(order_by))
+  url = glue("https://api.typeform.com/forms/{form_id}/responses?\\
+             {page_size}&{since}&{until}&{after}&{before}\\
+             {completed}&{query}&{fields}")
+  content = send_response(api = api, url)
+  (total_items = content$total_items)
+  page_count = content$page_count
+  meta = get_meta(content)
+  items = content$items
+  answers = items$answers
 
-  ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
-  resp = httr::GET(url, ua)
-  cont = httr::content(resp, "text")
-  check_api_response(resp)
-  parsed = jsonlite::fromJSON(cont, simplifyVector = FALSE)
+  # all_answers: list where each element is a question
+  all_answers = answers %>%
+    map(flatten_answers)%>%
+    map2(items$landing_id, ~mutate(.x, landing_id = .y)) %>%
+    bind_rows() %>%
+    split(.$field_id)
 
-  ## Extract questions
-  questions = purrr::map_df(parsed$questions, purrr::flatten_df)
+  question_types = all_answers %>%
+    map(~select(.x, type_value)) %>%
+    map(~slice(.x, 1)) %>%
+    bind_rows() %>%
+    pull()
 
-  ## Extract completed
-  q_keep = purrr::keep(parsed$responses, ~.$completed == 1)
-  completed  = split_hidden(q_keep, questions)
+  all_answers = all_answers %>%
+    map2(question_types,
+         ~select(.x,
+                 "field_type", "landing_id", starts_with(paste0(.y, "_")))) %>%
+    map(unnest)  %>%
+    map(~rename(.x, type = 1, value = 3))
 
-  ## one irritating issue was that if an answer has not been used yet,
-  ## the column will be omitted from the resultant data frame. This makes
-  ## an inconsistency when reasoning on the data frame. Prime culprit for
-  ## this is yes/no other questions where typeform treats this as two separate
-  ## answers. fix below
-  completed = fix_columns(questions,completed)
-
-  ## Extract non-completed
-  q_keep = purrr::keep(parsed$responses, ~.$completed == 0)
-  uncompleted  = split_hidden(q_keep, NULL)
-
-  ## Return object
-  structure(
-    list(
-      http_status = parsed$http_status,
-      stats = parsed$stats$responses,
-      questions = questions,
-      completed = completed,
-      uncompleted = uncompleted
-    ),
-    class = "rtypeform_results"
-  )
+  c(list(meta = meta), all_answers)
 }
-
-#' @importFrom utils type.convert
-#' @rdname get_questionnaire
-#' @param stringsAsFactors default \code{FALSE}. When converting response, should
-#' characters be treated as factors.
-#' @export
-get_results = function(uid, api = NULL,
-                       completed = NULL, since = NULL, until = NULL, offset = NULL,
-                       limit = NULL, order_by = NULL,
-                       stringsAsFactors = FALSE) {
-  .Deprecated("get_questionnaire") #nocov
-  api = get_api(api) #nocov
-  url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api) #nocov
-
-  ## Argument checking
-  if(!is.null(completed)) { #nocov
-    if(isTRUE(completed)) url = paste0(url, "&completed=true") #nocov
-    else url = paste0(url, "&completed=false") #nocov
-  } #nocov
-
-  if(!is.null(since)) url = paste0(url, "&since=", get_linux_time(since))  #nocov
-  if(!is.null(until)) url = paste0(url, "&until=", get_linux_time(until)) #nocov
-  if(!is.null(offset)) url = paste0(url, "&offset=", offset) #nocov
-  if(!is.null(limit)) url = paste0(url, "&limit=", limit) #nocov
-
-  ## Form the REST URL & query
-  url = paste0(url , get_order_by(order_by)) #nocov
-
-  ua = httr::user_agent("https://github.com/csgillespie/rtypeform") #nocov
-  resp = httr::GET(url, ua) #nocov
-  cont = httr::content(resp, "text") #nocov
-  check_api_response(resp) #nocov
-
-  parsed = jsonlite::fromJSON(cont) #nocov
-
-  ## Convert arguments
-  parsed$responses$answers = as.data.frame( #nocov
-    lapply( #nocov
-      parsed$responses$answers, function(x) type.convert(x, as.is = stringsAsFactors) #nocov
-    ), stringsAsFactors = FALSE #nocov
-  )  #nocov
-
-  ## Return object
-  structure( #nocov
-    list(#nocov
-      stats = parsed$stats, #nocov
-      questions = parsed$questions, #nocov
-      responses = parsed$responses, #nocov
-      response = resp #nocov
-    ), #nocov
-    class = "rtypeform_results" #nocov
-  )  #nocov
-}
-
 
