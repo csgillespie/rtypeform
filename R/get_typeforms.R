@@ -29,7 +29,7 @@ get_typeforms = function(api = NULL) {
   check_api_response(resp)
 
   content = jsonlite::fromJSON(cont)
-  if(NCOL(content) == 0L) contenct = tibble("uid"= "", "name" = "")
+  if(NCOL(content) == 0L) content = tibble("uid"= "", "name" = "")
   colnames(content) = c("uid", "name")
 
   # The returned object
