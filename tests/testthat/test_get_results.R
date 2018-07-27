@@ -22,14 +22,14 @@ test_that("Testing get_questionnaire_typeforms", {
   expect_equal(nrow(res$completed) + nrow(res$uncompleted), no_completed)
 
   ## since = NULL, until = NULL,
-  #Sys.sleep(1)# rate limit
+  Sys.sleep(1)# rate limit
 
 
   ## offset = NULL
-  Sys.sleep(1.5 + runif(1))# rate limit
-  offset = 5
-  res = get_questionnaire(uid, offset = offset)
-  expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - offset)
+  # Sys.sleep(1.5 + runif(1))# rate limit
+  # offset = 100
+  # res = get_questionnaire(uid, offset = offset)
+  # expect_equal(nrow(res$completed) + nrow(res$uncompleted), total - offset)
 
   ## limit = NULL
   limit = 5

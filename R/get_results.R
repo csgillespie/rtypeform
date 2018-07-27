@@ -106,6 +106,11 @@ split_hidden = function(responses, questions) {
 get_questionnaire = function(uid, api = NULL,
                              completed = NULL, since = NULL, until = NULL, offset = NULL,
                              limit = NULL, order_by = NULL) {
+
+  if(!is.null(offset)) {
+    message("offset seems to be broken in the API.")
+  }
+
   api = get_api(api)
   url = paste0("https://api.typeform.com/v1/form/", uid, "?key=", api)
 

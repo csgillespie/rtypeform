@@ -1,3 +1,8 @@
+# Version 0.4.0
+  * Bug fix: Empty data frames now returned
+  * Intended to the final version using the V1 data API. Added a start-up message.
+  * Removed offset argument - seems to be broken at the typeform end.
+
 # Version 0.3.3
   * More consistent response with `get_typeforms()`.
   * Bug fix: Return an empty data frame when there are no typeforms (very edge case).
