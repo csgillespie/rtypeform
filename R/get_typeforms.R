@@ -30,7 +30,6 @@ get_forms = function(api = NULL,
                      page_size = 10,
                      search = "",
                      workspace_id = NULL) {
-
   if (page_size > 200) {
     warning("Maximum size is 200. Setting page size to 200")
     page_size = 200
@@ -38,9 +37,9 @@ get_forms = function(api = NULL,
   if (!is.null(workspace_id)) {
     stop("workspace_id's have not yet been implemented.", call. = FALSE)
   }
-
   url = glue("https://api.typeform.com/forms?page={page}&page_size={page_size}&search={search}")
   content = send_response(api = api, url)
+
 
   ## TODO: Use this to give use message for empty contents
   #total_items = content$total_items
@@ -51,7 +50,6 @@ get_forms = function(api = NULL,
                     is_trial = "", questions = "", theme = "", questionnaire_url = "")
     return(items)
   }
-
   items = items %>%
     select(-settings, -self, -theme, -"_links") %>%
     as_tibble() %>%
