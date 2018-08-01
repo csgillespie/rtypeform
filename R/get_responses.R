@@ -7,41 +7,28 @@ flatten_answers = function(a) {
 
 globalVariables(c("answers", "metadata", "hidden", "calculated",
                   "landed_at", "submitted_at"))
+#' @importFrom dplyr matches
 get_meta = function(content) {
   items = content$items
+  if (length(items) == 0) {
+    empty_meta = tibble("landing_id" = "", "token" = "",
+           "landed_at" = "", "submitted_at" = "", "user_agent" = "",
+           "platform" = "", "referer" = "", "network_id" = "",
+           "browser" = "", "score" = "")[0,]
+    return(empty_meta)
+  }
   meta = items %>%
-    select(-answers, -metadata, -hidden, -calculated) %>%
+    select(-answers, -metadata, -matches("hidden"), -matches("calculated")) %>%
     as_tibble() %>%
     bind_cols(items$metadata, items$hidden, items$calculated) %>%
     mutate(landed_at = ymd_hms(landed_at),
            submitted_at = ymd_hms(submitted_at))
+
+  attr(meta, "total_items") = content$total_items
+  attr(meta, "page_count") = content$page_count
   meta
 }
 
-#' @importFrom lubridate tz with_tz is.POSIXct ymd_hms
-format_date_time = function(date_time) {
-  if(is.null(date_time)) return(NULL)
-  obj_name = deparse(substitute(date_time))
-  if(!is.POSIXct(date_time)) {
-    stop(obj_name, " is not a date time object", call. = FALSE)
-  }
-  if(tz(date_time) != "UTC") {
-    message("Converting ", obj_name, "'s timezone to UTZ.")
-    date_time = with_tz(date_time, "UTC")
-  }
-  gsub(pattern = " ", "T", as.character(date_time))
-}
-
-create_argument = function(arg) {
-  if(is.null(arg)) return("")
-  obj_name = deparse(substitute(arg))
-  glue("{obj_name}={arg}")
-}
-
-format_completed = function(completed) {
-  if(is.null(completed)) return(NULL)
-  if(completed) "true" else "false"
-}
 
 globalVariables(".")
 #' Download questionnaire results
@@ -75,7 +62,7 @@ globalVariables(".")
 #' @importFrom purrr %>%
 #' @seealso https://developer.typeform.com/responses/reference/retrieve-responses/
 #' @export
-get_answers = function(form_id, api = NULL,
+get_responses = function(form_id, api = NULL,
                        page_size = 25,
                        since = NULL, until = NULL, after = NULL, before = NULL,
                        completed = NULL, query = NULL, fields = NULL) {
@@ -101,16 +88,19 @@ get_answers = function(form_id, api = NULL,
   url = glue("https://api.typeform.com/forms/{form_id}/responses?\\
              {page_size}&{since}&{until}&{after}&{before}\\
              {completed}&{query}&{fields}")
-  content = send_response(api = api, url)
-  (total_items = content$total_items)
-  page_count = content$page_count
+  content = get_response(api = api, url)
+
   meta = get_meta(content)
+  if (nrow(meta) == 0L) { # No responses
+    return(list(meta = meta))
+  }
+
   items = content$items
   answers = items$answers
 
   # all_answers: list where each element is a question
   all_answers = answers %>%
-    map(flatten_answers)%>%
+    map(flatten_answers) %>%
     map2(items$landing_id, ~mutate(.x, landing_id = .y)) %>%
     bind_rows() %>%
     split(.$field_id)
@@ -125,7 +115,7 @@ get_answers = function(form_id, api = NULL,
     map2(question_types,
          ~select(.x,
                  "field_type", "landing_id", starts_with(paste0(.y, "_")))) %>%
-    map(unnest)  %>%
+    map(unnest) %>%
     map(~rename(.x, type = 1, value = 3))
 
   c(list(meta = meta), all_answers)

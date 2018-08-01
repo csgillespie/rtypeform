@@ -4,8 +4,12 @@
 get_number_of_forms = function(api = NULL,
                                search = "",
                                workspace_id = NULL) {
-  url = glue("https://api.typeform.com/forms?page_size={1}&search={search}")
-  content = send_response(api = api, url)
+  page_size = 1
+  page_size = create_argument(page_size)
+  search = create_argument(search)
+  workspace_id = create_argument(workspace_id)
+  url = glue("https://api.typeform.com/forms?{page_size}&{search}&{workspace_id}")
+  content = get_response(api = api, url)
   content$total_items
 }
 
@@ -34,20 +38,19 @@ get_forms = function(api = NULL,
     warning("Maximum size is 200. Setting page size to 200")
     page_size = 200
   }
-  if (!is.null(workspace_id)) {
-    stop("workspace_id's have not yet been implemented.", call. = FALSE)
-  }
-  url = glue("https://api.typeform.com/forms?page={page}&page_size={page_size}&search={search}")
-  content = send_response(api = api, url)
 
+  page = create_argument(page)
+  page_size = create_argument(page_size)
+  search = create_argument(search)
+  workspace_id = create_argument(workspace_id)
 
-  ## TODO: Use this to give use message for empty contents
-  #total_items = content$total_items
-  #page_count = content$page_count
+  url = glue::glue("https://api.typeform.com/forms?{page}&{page_size}&{search}&{workspace_id}")
+  content = get_response(api = api, url)
+
   items = content$items
   if (length(items) == 0) {
-    items  = tibble(id = "", title = "", last_updated = "", is_public = "",
-                    is_trial = "", questions = "", theme = "", questionnaire_url = "")
+    items  = tibble(form_id = "", title = "", last_updated = "", is_public = "",
+                    is_trial = "", questions = "", theme = "", questionnaire_url = "")[0,]
     return(items)
   }
   items = items %>%
@@ -60,8 +63,11 @@ get_forms = function(api = NULL,
     rename(questions = href,
            theme = href1,
            questionnaire_url = display,
-           last_updated = last_updated_at) %>%
+           last_updated = last_updated_at,
+           form_id = id) %>%
     mutate(last_updated = lubridate::ymd_hms(items$last_updated))
+  attr(items, "total_items") = content$total_items
+  attr(items, "page_count") = content$page_count
   items
 }
 

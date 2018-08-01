@@ -1,3 +1,6 @@
+# Version 1.0.0
+  * Move to the new typeform API - breaking changes
+  
 # Version 0.3.3
   * More consistent response with `get_typeforms()`.
   * Bug fix: Return an empty data frame when there are no typeforms (very edge case).
