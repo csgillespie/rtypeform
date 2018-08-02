@@ -6,7 +6,7 @@ get_authorization = function(api) {
 #' @importFrom httr status_code
 check_api_response = function(resp, content) {
   status_code = httr::status_code(resp)
-  if (status_code %in% c(200, 201, 204)) return(invisible(NULL))
+  if (status_code %in% c(200, 201, 204)) return(invisible(TRUE))
 
   msg = glue::glue("{status_code} - {content$code}: {content$description}")
   stop(msg, call. = FALSE)
@@ -32,20 +32,33 @@ delete_response = function(api, url) {
 
   resp = httr::DELETE(url, authorization, ua)
   cont = httr::content(resp, "text", encoding = "UTF-8")
-  content = jsonlite::fromJSON(cont)
+
+  if (nchar(cont) > 0) content = jsonlite::fromJSON(cont)
+  else content = ""
 
   check_api_response(resp, content)
-  return(invisible(TRUE))
 }
 
 #' @importFrom httr POST
-post_response = function(api, url, body) {
+post_response = function(api, url, body = NULL, ...) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
 
-  resp = httr::POST(url, authorization, body = body, ua)
+  resp = httr::POST(url, authorization, body = body, ua, ...)
   cont = httr::content(resp, "text", encoding = "UTF-8")
   content = jsonlite::fromJSON(cont)
+
+  check_api_response(resp, content)
+  content
+}
+
+#' @importFrom httr POST
+patch_response = function(api, url, body = NULL, ...) {
+  authorization = get_authorization(api)
+  ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
+
+  resp = httr::PATCH(url, authorization, body = body, ua, ...)
+  cont = httr::content(resp, "text", encoding = "UTF-8")
 
   check_api_response(resp, content)
   content
