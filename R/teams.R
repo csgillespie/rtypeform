@@ -1,3 +1,10 @@
+#' @rdname get_teams
+#' @export
+get_number_of_seats = function(api = NULL) {
+  teams = get_teams(api)
+  attr(teams, "total_seats")
+}
+
 #' Get team members
 #'
 #' Return a tibble containing the current team members. The
