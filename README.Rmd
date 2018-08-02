@@ -109,6 +109,7 @@ Since the responses is list, we get to perform lots of map operations. I find us
 `purrr` and the `tidyverse` make this a bit easier. To see the question types we
 can use string a few `map()` commands together
 ```{r eval=FALSE}
+library("tidyverse")
 question_types = q[-1] %>% # Remove the meta
    map(~select(.x, type)) %>%
    map_df(~slice(.x, 1)) %>%

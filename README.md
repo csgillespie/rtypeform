@@ -28,6 +28,7 @@ and loaded in the usual way.
 
 ``` r
 library("rtypeform")
+#> This package now uses V2 of the typeform API.This update breaks ALL code (sorry, not my fault).The README provides some guidence on using the new functions.You will need to generate a new API. See the README for details.
 ```
 
 ## Obtaining an API key
@@ -101,6 +102,7 @@ find using `purrr` and the `tidyverse` make this a bit easier. To see
 the question types we can use string a few `map()` commands together
 
 ``` r
+library("tidyverse")
 question_types = q[-1] %>% # Remove the meta
    map(~select(.x, type)) %>%
    map_df(~slice(.x, 1)) %>%
