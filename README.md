@@ -12,8 +12,8 @@ Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://
 specialises in online form building. This R package allows users to
 download their form results through the exposed API (V2).
 
-**This README relates to version 1.0.0 that is NOT on CRAN. This is a
-breaking version as it transfers from V1 to V2 to the typeform API. Feel
+**This README relates to version 2.0.0 that is NOT on CRAN. This is a
+breaking version as it transfers from V1 to V2 of the typeform API. Feel
 free to try it out and give feedback.**
 
 ## Installation
