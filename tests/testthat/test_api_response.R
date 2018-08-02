@@ -1,15 +1,23 @@
 test_that("Testing api response", {
+  skip_on_cran()
 
-  res = httr::GET(url = "http://httpbin.org/status/400")
-  expect_error(check_api_response(res), regexp = "Invalid date in query")
+  expect_error(get_forms("XXX"), regexp = "403")
 
-  res = httr::GET(url = "http://httpbin.org/status/403")
-  expect_error(check_api_response(res), regexp = "Expired token, invalid token")
-
-  res = httr::GET(url = "http://httpbin.org/status/404")
-  expect_error(check_api_response(res), regexp = "Invalid typeform id")
-
-  res = httr::GET(url = "http://httpbin.org/status/405")
-  expect_error(check_api_response(res), regexp = "rtypeform API request failed")
 }
 )
+
+test_that("Testing get_api", {
+  skip_on_cran()
+  api2 = Sys.getenv("typeform_api2")
+  expect_equal(get_api(), Sys.getenv("typeform_api2"))
+  Sys.unsetenv("typeform_api2")
+
+  expect_error(get_api())
+  Sys.setenv("typeform_api" = 10)
+
+  expect_error(get_api(), regexp = "Old")
+  expect_equal(get_api("test"), "test")
+
+  Sys.setenv("typeform_api2" = api2)
+
+})

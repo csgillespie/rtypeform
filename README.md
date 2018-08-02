@@ -1,13 +1,22 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-API to typeform data sets
-=========================
 
-[![Build Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform) [![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform) [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
+# API to typeform data sets
 
-[Typeform](http://referral.typeform.com/mzcsnTI) is a company that specialises in online form building. This R package allows users to download their form results through the exposed API.
+[![Build
+Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
+[![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
+[![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
-Installation
-------------
+[Typeform](http://referral.typeform.com/mzcsnTI) is a company that
+specialises in online form building. This R package allows users to
+download their form results through the exposed API (V2).
+
+**This README relates to version 1.0.0 that is NOT on CRAN. This is a
+breaking version as it transfers from V1 to V2 to the typeform API. Feel
+free to try it out and give feedback.**
+
+## Installation
 
 The package can be installed from CRAN
 
@@ -15,85 +24,114 @@ The package can be installed from CRAN
 install.packages("rtypeform")
 ```
 
-The package can then be loaded in the usual way
+and loaded in the usual way.
 
 ``` r
 library("rtypeform")
 ```
 
-Using the package
------------------
+## Obtaining an API key
 
-To use this package, you will need a [data API](https://www.typeform.com/help/data-api/) key. With this key in position, you can then list your available forms
+To use this package you need a **V2** API key. It is fairly easy to
+obtain one. See typeform’s [help
+page](https://developer.typeform.com/get-started/personal-access-token/).
+The token will look something like
+
+> 943af478d3ff3d4d760020c11af102b79c440513
+
+Whenever the package refers to `api`, this is the object it needs.
+
+## Using the package
+
+Once you have this key, we can extract data from typeform
 
 ``` r
 api = "XXXXX"
-typeforms = get_typeforms(api)
-typeforms$content
+# Was get_typeforms() in V1 of the package
+forms = get_forms(api)
 ```
 
-If you don't pass your `api` key as an argument, it will attempt to read the variable `typeform_api` from your `.Renviron` file, via `Sys.getenv("typeform_api")`. If this variable is set correctly, then you can **omit** the `api` argument
+The forms object is also contains attributes containing the total number
+of forms.
 
 ``` r
-typeforms = get_typeforms()
+attr(forms, "total_items")
+#> [1] 3
 ```
 
-In all function calls below, the `api` argument can be ommitted if the environment variable is set (see Efficient R programming [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron) for more details).
+If you don’t pass your `api` key as an argument, it will attempt to read
+the variable `typeform_api2` from your `.Renviron` file, via
+`Sys.getenv("typeform_api2")`. If this variable is set correctly, then
+you can **omit** the `api` argument
+
+``` r
+# See ?get_forms for further details
+forms = get_forms()
+```
+
+In all function calls below, the `api` argument can be ommitted if the
+environment variable is set (see Efficient R programming
+[Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron)
+for more details).
 
 You can download data from a particular typeform via
 
 ``` r
 # Most recent typeform
-uid = typeforms$content$uid[1]
-## uid can be obtained from the typeforms data set above
-q = get_questionnaire(uid, api)
+form_id = forms$form_id[1]
+q = get_responses(form_id, completed = TRUE)
 ```
 
-The object `q` contains a few useful components,
-
-``` r
-q$questions
-q$completed
-q$uncompleted
-```
+The object `q` is a list. The first element is `meta` that contain
+details on the user, such as, their `platform` and `user_agent`. The
+other list elements are responses to each question.
 
 There are a number of options for downloading the data. For example
 
 ``` r
-## Only completed forms
-get_questionnaire(uid, api, completed = TRUE)
-
-## Results since the 1st Jan
-get_questionnaire(uid, api, since = as.Date("2016-01-01"))
+q = get_responses(form_id, completed = TRUE, page_size = 100)
 ```
 
-See the `?get_questionnaire()` help page for other options.
+See the `?get_responses()` help page for other options.
 
-Example: Multiple Filters / Order
----------------------------------
+### Looking at the responses
 
-Imagine we only want to fetch the last 10 completed responses.
-
--   We only want completed results, so we add the parameter `completed = TRUE`.
--   The results need to be ordered by newest results first, so we add the parameter `order_by = "date_submit_desc"`
--   We only want a maximum of 10 results, so we add the parameter `limit = 10`
-
-This gives the function call
+Since the responses is list, we get to perform lots of map operations. I
+find using `purrr` and the `tidyverse` make this a bit easier. To see
+the question types we can use string a few `map()` commands together
 
 ``` r
-get_questionnaire(uid, 
-                  api, 
-                  completed = TRUE, 
-                  order_by = "date_submit_desc", 
-                  limit = 10)
+question_types = q[-1] %>% # Remove the meta
+   map(~select(.x, type)) %>%
+   map_df(~slice(.x, 1)) %>%
+   pull()
 ```
 
-Other information
------------------
+### Example: Multiple Filters / Order
 
--   If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/rtypeform/issues).
--   Feel free to submit pull requests.
+Imagine we only want:
 
-------------------------------------------------------------------------
+  - completed results, so we add the parameter `completed = TRUE`.
+  - a maximum of 5 results, so we add the parameter `page_size = 5`.
+  - results since `2018-01-01 11:00:00`.
 
-Development of this package was supported by [Jumping Rivers](https://www.jumpingrivers.com)
+<!-- end list -->
+
+``` r
+since = "2018-01-01 11:00:00"
+# convert to date-time 
+since = lubridate::ymd_hms(since)
+q = get_responses(form_id, completed = TRUE, 
+                  page_size = 5, since = since)
+```
+
+## Other information
+
+  - If you have any suggestions or find bugs, please use the github
+    [issue tracker](https://github.com/csgillespie/rtypeform/issues).
+  - Feel free to submit pull requests.
+
+-----
+
+Development of this package was supported by [Jumping
+Rivers](https://www.jumpingrivers.com)

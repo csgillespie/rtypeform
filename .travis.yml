@@ -1,5 +1,5 @@
-language: r
 cache: packages
+language: r
 
 r:
   - oldrel

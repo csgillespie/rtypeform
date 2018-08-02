@@ -8,9 +8,12 @@ get_api(api = NULL)
 }
 \arguments{
 \item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
-the environment variable \code{Sys.getenv("typeform_api")} is used.}
+the environment variable \code{Sys.getenv("typeform_api2")} is used.}
 }
 \description{
-If the entry \code{typeform_api} exists in your
+If the entry \code{typeform_api2} exists in your
 \code{.Renviron} return that value. Otherwise, raise an error.
+}
+\details{
+In version 1 of the typeform API, rtypeform looked for the key \code{typeform_api},
 }

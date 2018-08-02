@@ -1,3 +1,6 @@
+# Version 1.0.0
+  * Move to the new typeform API - breaking changes
+  
 # Version 0.4.0
   * Bug fix: Empty data frames now returned
   * Intended to the final version using the V1 data API. Added a start-up message.
