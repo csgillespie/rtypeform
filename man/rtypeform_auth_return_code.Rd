@@ -8,8 +8,6 @@ rtypeform_auth_return_code(session)
 }
 \arguments{
 \item{session}{A shiny session object}
-
-\item{securityCode}{A random string to check the auth comes form the same origin.}
 }
 \value{
 The auth token in the code URL parameter.

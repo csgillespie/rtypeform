@@ -31,27 +31,13 @@ rtypeform_shiny_get_url = function(session){
 #' Checks the URL of the Shiny app to get the state and code URL parameters.
 #'
 #' @param session A shiny session object
-#' @param securityCode A random string to check the auth comes form the same origin.
 #'
 #' @return The auth token in the code URL parameter.
 #' @family shiny auth functions
 #' @keywords internal
-rtypeform_auth_return_code = function(session#,
-                           #securityCode=getOption("googleAuthR.securitycode")
-                           ){
+rtypeform_auth_return_code = function(session){
   check_package_loaded("shiny")
   pars = shiny::parseQueryString(session$clientData$url_search)
-
-  # if(!is.null(pars$state)){
-  #   if(pars$state != securityCode){
-  #     warning("securityCode check failed in Authentication! Code:",
-  #             pars$state,
-  #             " Expected:",
-  #             securityCode)
-  #     return(NULL)
-  #   }
-  # }
-
   if(!is.null(pars$code)){
     return(pars$code)
   } else {
@@ -144,12 +130,7 @@ rtypeform_auth_serve = function(input,output,session,
       ## extract the authorization token
       app_url = rtypeform_shiny_get_url(session)
       access_token = rtypeform_shiny_get_token(rtypeform_auth_return_code(session), app_url)
-
-      # Authentication$set("public", "app_url", app_url, overwrite=TRUE)
-      # Authentication$set("public", "shiny", TRUE, overwrite=TRUE)
-      #
       access_token
-
     } else {
       NULL
     }
@@ -166,16 +147,12 @@ rtypeform_auth_serve = function(input,output,session,
                                  class=login_class,
                                  role="button"))
     } else {
-
         logout_button = shiny::a(logout_text,
                                   href = rtypeform_shiny_get_url(session),
                                   class=logout_class,
                                   role="button")
         logout_button
       }
-
-
-
   })
 
   return(accessToken)
