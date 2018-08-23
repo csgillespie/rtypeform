@@ -39,6 +39,7 @@ rtypeform_auth_return_code = function(session){
   check_package_loaded("shiny")
   pars = shiny::parseQueryString(session$clientData$url_search)
   if(!is.null(pars$code)){
+    message("Return Code: ", pars$code)
     return(pars$code)
   } else {
     NULL
@@ -64,6 +65,7 @@ rtypeform_shiny_get_auth_url = function(redirect.uri,
                                 access = "https://api.typeform.com/oauth/token")$authorize,
       query = list(response_type = "code",
                    client_id = client.id,
+                   #client_secret = client.secret,
                    redirect_uri = redirect.uri,
                    scope = scopeEnc,
                    access_type = access_type,
@@ -73,25 +75,26 @@ rtypeform_shiny_get_auth_url = function(redirect.uri,
   }
 
 #' @importFrom httr oauth_app POST headers content Token2.0 oauth_endpoints
-rtypeform_shiny_get_token = function(redirect_uri, client_id, client_secret){
+rtypeform_shiny_get_token = function(code, redirect_uri, client_id = getOption("rtypeform.webapp.client_id"), client_secret = getOption("rtypeform.webapp.client_secret")){
 
   typeform_app = oauth_app("typeform", key = client_id, secret= client_secret)
   scope_list = getOption("rtypeform.scopes_selected")
 
-  req = POST("https://api.typeform.com/oauth/authorize",
-             body = list(
+  req = POST("https://api.typeform.com/oauth/token",
+             body = list(grant_type='authorization_code',
                client_id = client_id,
                client_secret = client_secret,
                redirect_uri = redirect_uri,
-               scope = scope_list
-             ))
+               code = code
+             ), encode = "form")
 
-  stopifnot(identical(headers(req)$`content-type`,
-                      "application/json; charset=utf-8"))
+  #stopifnot(identical(headers(req)$`content-type`,
+   #                   "application/json; charset=utf-8"))
   # content of req will contain access_token, token_type, expires_in
   token <- content(req, type = "application/json")
 
   # Create a Token2.0 object consistent with the token obtained from gar_auth()
+  message("Returning Token")
   Token2.0$new(app = typeform_app,
                endpoint = oauth_endpoint(authorize = "https://api.typeform.com/oauth/authorize",
                                          access = "https://api.typeform.com/oauth/token"),
