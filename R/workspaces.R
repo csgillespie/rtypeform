@@ -54,13 +54,17 @@ create_workspace = function(workspace_name, api = NULL) {
 get_workspace = function(workspace_id, api = NULL) {
   url = glue("https://api.typeform.com/workspaces/{workspace_id}")
   content = get_response(api, url)
-  items = content$items
-  workspace = items %>%
-    select(-matches("forms"), -matches("self")) %>%
-    as_tibble() %>%
-    bind_cols(items$forms, items$self)
-  attr(workspace, "page_count") = content$page_space
-  attr(workspace, "total_items") = content$total_items
+  workspace = tibble(default = content$default,
+         id = content$id,
+         name = content$name,
+         self = content$self,
+         forms_count = content$forms$count,
+         forms_href = content$forms$href,
+         members_email = content$members$email,
+         members_id = content$members$id,
+         members_name = content$members$name,
+         members_role = content$members$role)
+
   workspace
 }
 
