@@ -9,12 +9,11 @@ Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://
 [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
 [Typeform](http://referral.typeform.com/mzcsnTI) is a company that
-specialises in online form building. This R package allows users to
+specializes in online form building. This R package allows users to
 download their form results through the exposed API (V2).
 
-**This README relates to version 2.0.0 that is NOT on CRAN. This is a
-breaking version as it transfers from V1 to V2 of the typeform API. Feel
-free to try it out and give feedback.**
+\*\* The `rtypeform` package now uses V2. This is a breaking change from
+the previous version.\*\*
 
 ## Installation
 
@@ -57,7 +56,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 3
+#> [1] 5
 ```
 
 If you don’t pass your `api` key as an argument, it will attempt to read
@@ -70,7 +69,7 @@ you can **omit** the `api` argument
 forms = get_forms()
 ```
 
-In all function calls below, the `api` argument can be ommitted if the
+In all function calls below, the `api` argument can be omitted if the
 environment variable is set (see Efficient R programming
 [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron)
 for more details).
