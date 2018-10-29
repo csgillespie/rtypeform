@@ -31,20 +31,85 @@ library("rtypeform")
 #> This package now uses V2 of the typeform API.This update breaks ALL code (sorry, not my fault).The README provides some guidence on using the new functions.You will need to generate a new API. See the README for details.
 ```
 
-## Obtaining an API key
+## Using this package
 
-To use this package you need a **V2** API key. It is fairly easy to
-obtain one. See typeform’s [help
+This package can be used with either a typeform personal access token or
+by setting up an application and creating an OAuth access token.
+
+A personal access token gives you full access to all of the typeform API
+for your typeforms and results. Note anyone with your personal access
+token can retrieve, update and delete your typeforms and data. To access
+your typeform data with a personal access token see the [Personal Access
+Token](#pat) section below.
+
+When creating an application with an OAuth access token, explicit
+permission for different functionality (scopes) must be granted. See the
+section below on [OAuth access](#oauth).
+
+If you have previously used the version 1 API this is now entirely
+removed. You can update your previous API key to replace it with a
+personal access token by following instructions at [this
+link](https://developer.typeform.com/get-started/convert-keys-to-access-tokens/).
+
+## Personal Access Token
+
+To use this package with a personal access token you need to first
+obtain one. It is fairly easy to obtain one. See typeform’s [help
 page](https://developer.typeform.com/get-started/personal-access-token/).
 The token will look something like
 
 > 943af478d3ff3d4d760020c11af102b79c440513
 
-Whenever the package refers to `api`, this is the object it needs.
+## OAuth Access
+
+When you create an application that authenticates using OAuth you will
+use scopes to define the extent of access to a users data. This way your
+app can request a users permission to undertake actions on that users
+behalf.
+
+[This link](https://developer.typeform.com/get-started/applications/)
+will get you started with registering a new application on your account.
+
+Once you have your client id and client secret you can use the
+`rtypeform` package to set these as environment variables.
+
+``` r
+rtypeform_set_client_id(<my client id>)
+rtypeform_set_client_secret(<my client secret>)
+```
+
+As with the personal access token. Anyone with these details can
+impersonate you to obtain, update and remove data, they should always be
+kept safe.
+
+Having set the client id and secret, before we can obtain an access
+token we also need to define the scope of our application.
+`rtypeform_set_scope` takes as argument a character vector of allowed
+access scopes. For more information see the scopes section below.
+
+``` r
+rtypeform_set_scope("forms:read")
+```
+
+We can then generate a new token with
+
+``` r
+api = make_new_token()
+```
+
+This will open a web browser prompting the user to give permission. The
+token can be cached in a local .httr-oauth file between sessions.
+
+### Scopes
+
+You define the scope at the time that the access token is generated. To
+discover what each scope allows access to, see
+[here.](https://developer.typeform.com/get-started/scopes/)
 
 ## Using the package
 
-Once you have this key, we can extract data from typeform
+Once you have this key, (either personal access token, or an oauth token
+created by `make_new_token()`) we can extract data from typeform
 
 ``` r
 api = "XXXXX"
@@ -57,17 +122,23 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 3
+#> [1] 37
 ```
 
-If you don’t pass your `api` key as an argument, it will attempt to read
-the variable `typeform_api2` from your `.Renviron` file, via
+If you don’t pass your `api` token as an argument, it will attempt to
+read the variable `typeform_api2` from your `.Renviron` file, via
 `Sys.getenv("typeform_api2")`. If this variable is set correctly, then
 you can **omit** the `api` argument
 
 ``` r
 # See ?get_forms for further details
 forms = get_forms()
+```
+
+To set the access token for the current session you can use
+
+``` r
+rtypeform_set_token(api)
 ```
 
 In all function calls below, the `api` argument can be ommitted if the

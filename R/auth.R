@@ -1,3 +1,8 @@
+#' Create an OAuth token
+#'
+#' Create a token object using the client id and secret options set, together
+#' with the defined scopes.
+#'
 #' @importFrom httr oauth_app oauth2.0_token oauth_endpoint
 #' @export
 make_new_token = function(){

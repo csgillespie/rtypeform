@@ -5,7 +5,7 @@ test_that("Testing get_forms", {
   no_of_forms = get_number_of_forms()
   expect_gte(no_of_forms, 1)
 
-  forms = get_forms()
+  forms = get_forms(page_size = 200)
   expect_equal(nrow(forms), no_of_forms)
   expect_equal(ncol(forms), 8L)
   expect_s3_class(forms, "tbl_df")
