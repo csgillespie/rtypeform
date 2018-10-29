@@ -13,7 +13,7 @@ Description: An R interface to the 'typeform' <https://typeform.com> application
   Also provides functions for downloading your results.
 License: GPL-2 | GPL-3
 LazyData: TRUE
-Imports: jsonlite, httr, purrr, utils, tibble, dplyr, glue, lubridate, tidyr
+Imports: jsonlite, httr, purrr, utils, tibble, dplyr, glue, lubridate, tidyr, assertthat
 Suggests: testthat
 RoxygenNote: 6.1.0
 Encoding: UTF-8

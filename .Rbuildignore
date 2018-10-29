@@ -4,3 +4,4 @@ README.html
 .travis.yml
 ^README\.Rmd$
 ^README-.*\.png$
+^\.httr-oauth$
