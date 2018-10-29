@@ -10,13 +10,13 @@ make_new_token = function(){
   secret = getOption("rtypeform.client_secret","")
   scope = getOption("rtypeform.scopes_selected","")
 
-  if(key == ""){
+  if(key == "" | is.null(key)){
     stop("option('rtypeform.client_id') has not been set")
   }
-  if(secret == ""){
+  if(secret == "" | is.null(secret)){
     stop("option('rtypeform.client_secret') has not been set")
   }
-  if(scope == ""){
+  if((length(scope) == 1 && scope == "") | is.null(scope)){
     stop("option('rtypeform.scopes_selected') has not been set")
   }
 
