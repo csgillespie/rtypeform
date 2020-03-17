@@ -1,7 +1,7 @@
 Package: rtypeform
 Type: Package
 Title: Interface to 'typeform' Results
-Version: 2.0.0
+Version: 2.0.0.9002
 Authors@R: person(given = "Colin", 
                   family = "Gillespie",
                   email = "csgillespie@gmail.com", 
@@ -15,5 +15,5 @@ License: GPL-2 | GPL-3
 LazyData: TRUE
 Imports: jsonlite, httr, purrr, utils, tibble, dplyr, glue, lubridate, tidyr, assertthat
 Suggests: testthat
-RoxygenNote: 6.1.0
+RoxygenNote: 7.0.2
 Encoding: UTF-8
