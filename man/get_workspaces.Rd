@@ -17,8 +17,13 @@ create_workspace(workspace_name, api = NULL)
 
 get_workspace(workspace_id, api = NULL)
 
-update_workspace(workspace_id, api = NULL, workspace_name = NULL,
-  add_members = NULL, remove_members = NULL)
+update_workspace(
+  workspace_id,
+  api = NULL,
+  workspace_name = NULL,
+  add_members = NULL,
+  remove_members = NULL
+)
 
 delete_workspace(workspace_id, api = NULL)
 }

@@ -1,8 +1,19 @@
+#' Get Authorziation
+#'
+#' A function to get authorization
+#' @param api An authentication key
+#' @export
 get_authorization = function(api) {
   api = get_api(api)
   httr::add_headers(authorization = glue("bearer {api}"))
 }
 
+#' Check api response
+#'
+#' A function that checks the api response
+#' @param resp A response
+#' @param content The content
+#' @export
 #' @importFrom httr status_code
 check_api_response = function(resp, content) {
   status_code = httr::status_code(resp)
@@ -12,6 +23,13 @@ check_api_response = function(resp, content) {
   stop(msg, call. = FALSE)
 }
 
+#' Get response
+#'
+#' A function that allows you to get a response from the
+#' server.
+#' @param api An authentication key
+#' @param url The URL of the site
+#' @export
 #' @importFrom httr GET user_agent content add_headers
 get_response = function(api, url) {
   authorization = get_authorization(api)
@@ -39,7 +57,6 @@ put_response = function(api, url, ...) {
   check_api_response(resp, content)
 }
 
-
 #' @importFrom httr DELETE
 delete_response = function(api, url) {
   authorization = get_authorization(api)
@@ -54,6 +71,15 @@ delete_response = function(api, url) {
   check_api_response(resp, content)
 }
 
+#' Post response
+#'
+#' A function that allows you to post an update to the
+#' server
+#' @param api An authentication key
+#' @param url The URL of the site
+#' @param body The infrormation sent out to the server. e.g. the title
+#' @param ... Other arguments
+#' @export
 #' @importFrom httr POST
 post_response = function(api, url, body = NULL, ...) {
   authorization = get_authorization(api)

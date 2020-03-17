@@ -5,3 +5,4 @@ README.html
 ^README\.Rmd$
 ^README-.*\.png$
 ^\.httr-oauth$
+LICENSE

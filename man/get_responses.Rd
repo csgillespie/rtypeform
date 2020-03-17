@@ -4,9 +4,18 @@
 \alias{get_responses}
 \title{Download questionnaire results}
 \usage{
-get_responses(form_id, api = NULL, page_size = 25, since = NULL,
-  until = NULL, after = NULL, before = NULL, completed = NULL,
-  query = NULL, fields = NULL)
+get_responses(
+  form_id,
+  api = NULL,
+  page_size = 25,
+  since = NULL,
+  until = NULL,
+  after = NULL,
+  before = NULL,
+  completed = NULL,
+  query = NULL,
+  fields = NULL
+)
 }
 \arguments{
 \item{form_id}{The form id of the typeform you want the results for.}

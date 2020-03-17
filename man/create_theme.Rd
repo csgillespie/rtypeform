@@ -10,21 +10,38 @@
 
 Theme API functions}
 \usage{
-create_theme(name, api = NULL, background_href = NULL,
-  background_layout = "fullscreen", background_brightness = 0,
-  colors_answer = "#4FB0AE", colors_background = "#FFFFFF",
-  colors_button = "#4FB0AE", colors_question = "#3D3D3D",
-  font = "Source Sans Pro", has_transparent_button = TRUE)
+create_theme(
+  name,
+  api = NULL,
+  background_href = NULL,
+  background_layout = "fullscreen",
+  background_brightness = 0,
+  colors_answer = "#4FB0AE",
+  colors_background = "#FFFFFF",
+  colors_button = "#4FB0AE",
+  colors_question = "#3D3D3D",
+  font = "Source Sans Pro",
+  has_transparent_button = TRUE
+)
 
 get_theme(theme_id, api = NULL)
 
 get_themes(api = NULL, page = 1, page_size = 10)
 
-update_theme(theme_id, name, api = NULL, background_href = NULL,
-  background_layout = "fullscreen", background_brightness = 0,
-  colors_answer = "#4FB0AE", colors_background = "#FFFFFF",
-  colors_button = "#4FB0AE", colors_question = "#3D3D3D",
-  font = "Source Sans Pro", has_transparent_button = TRUE)
+update_theme(
+  theme_id,
+  name,
+  api = NULL,
+  background_href = NULL,
+  background_layout = "fullscreen",
+  background_brightness = 0,
+  colors_answer = "#4FB0AE",
+  colors_background = "#FFFFFF",
+  colors_button = "#4FB0AE",
+  colors_question = "#3D3D3D",
+  font = "Source Sans Pro",
+  has_transparent_button = TRUE
+)
 
 delete_theme(theme_id, api = NULL)
 }

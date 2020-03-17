@@ -7,8 +7,13 @@
 \usage{
 get_number_of_forms(api = NULL, search = "", workspace_id = NULL)
 
-get_forms(api = NULL, page = 1, page_size = 10, search = "",
-  workspace_id = NULL)
+get_forms(
+  api = NULL,
+  page = 1,
+  page_size = 10,
+  search = "",
+  workspace_id = NULL
+)
 }
 \arguments{
 \item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
