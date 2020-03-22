@@ -65,11 +65,11 @@ When you create an application that authenticates using OAuth you will use scope
 
 [This link](https://developer.typeform.com/get-started/applications/) will get you started with registering a new application on your account. 
 
-Once you have your client id and client secret you can use the `rtypeform` package to set these as options. 
+Once you have your client id and client secret you can use the __rtypeform__ package to set these as options. 
 
 ```{r, eval = FALSE}
-rtypeform_set_client_id(<my client id>)
-rtypeform_set_client_secret(<my client secret>)
+rtypeform_set_client_id(my_client_id)
+rtypeform_set_client_secret(my_client_secret)
 ```
 
 As with the personal access token. Anyone with these details can impersonate you to obtain, update and remove data, they should always be kept safe.

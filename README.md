@@ -27,7 +27,11 @@ and loaded in the usual way.
 
 ``` r
 library("rtypeform")
-#> This package now uses V2 of the typeform API.This update breaks ALL code (sorry, not my fault).The README provides some guidence on using the new functions.You will need to generate a new API. See the README for details.
+#> This package now uses V2 of the typeform API.This update breaks ALL code (sorry, not my fault).The README provides some guidence on using the new functions.You will need to generate a new API. See the README
+#> 
+#> https://cran.r-project.org/web/packages/rtypeform/readme/README.html
+#> 
+#> for details.
 ```
 
 ## Using this package
@@ -70,11 +74,11 @@ behalf.
 will get you started with registering a new application on your account.
 
 Once you have your client id and client secret you can use the
-`rtypeform` package to set these as environment variables.
+**rtypeform** package to set these as options.
 
 ``` r
-rtypeform_set_client_id(<my client id>)
-rtypeform_set_client_secret(<my client secret>)
+rtypeform_set_client_id(my_client_id)
+rtypeform_set_client_secret(my_client_secret)
 ```
 
 As with the personal access token. Anyone with these details can
@@ -121,7 +125,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 37
+#> [1] 3
 ```
 
 If you don’t pass your `api` token as an argument, it will attempt to
@@ -140,8 +144,7 @@ To set the access token for the current session you can use
 rtypeform_set_token(api)
 ```
 
-In all function calls below, the `api` argument can be ommitted if the
-environment variable is set (see Efficient R programming
+set (see Efficient R programming
 [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron)
 for more details).
 
@@ -151,6 +154,8 @@ You can download data from a particular typeform via
 # Most recent typeform
 form_id = forms$form_id[1]
 q = get_responses(form_id, completed = TRUE)
+#> Warning: `cols` is now required.
+#> Please use `cols = c()`
 ```
 
 The object `q` is a list. The first element is `meta` that contain
@@ -161,6 +166,8 @@ There are a number of options for downloading the data. For example
 
 ``` r
 q = get_responses(form_id, completed = TRUE, page_size = 100)
+#> Warning: `cols` is now required.
+#> Please use `cols = c()`
 ```
 
 See the `?get_responses()` help page for other options.
