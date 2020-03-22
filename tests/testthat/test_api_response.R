@@ -1,8 +1,6 @@
 test_that("Testing api response", {
   skip_on_cran()
-
   expect_error(get_forms("XXX"), regexp = "403")
-
 }
 )
 
