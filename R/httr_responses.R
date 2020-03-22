@@ -99,9 +99,8 @@ patch_response = function(api, url, body = NULL, ...) {
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
 
   resp = httr::PATCH(url, authorization, body = body, ua, ...)
-  cont = httr::content(resp, "text", encoding = "UTF-8")
+  content = httr::content(resp, "text", encoding = "UTF-8")
 
   check_api_response(resp, content)
   content
 }
-

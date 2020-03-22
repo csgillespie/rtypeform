@@ -4,4 +4,3 @@ get_form = function(form_id, api = NULL) {
   content = get_response(api = api, url)
   content
 }
-

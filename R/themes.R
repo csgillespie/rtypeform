@@ -1,12 +1,4 @@
 globalVariables(c("colors", "background"))
-# name = "test"
-# api = NULL
-# background_href = NULL; background_layout = "fullscreen";
-# background_brightness = 0;
-# colors_answer = "#4FB0AE"; colors_background = "#FFFFFF";
-# colors_button="#4FB0AE"; colors_question = "#3D3D3D";
-# font = "Source Sans Pro";
-# has_transparent_button = TRUE
 
 #' @title Theme functions
 #'
@@ -103,6 +95,3 @@ delete_theme = function(theme_id, api = NULL) {
   url = glue("https://api.typeform.com/themes/{theme_id}")
   delete_response(api = api, url = url)
 }
-
-
-

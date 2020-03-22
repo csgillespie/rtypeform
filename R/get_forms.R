@@ -50,7 +50,7 @@ get_forms = function(api = NULL,
   items = content$items
   if (length(items) == 0) {
     items  = tibble(form_id = "", title = "", last_updated = "", is_public = "",
-                    is_trial = "", questions = "", theme = "", questionnaire_url = "")[0,]
+                    is_trial = "", questions = "", theme = "", questionnaire_url = "")[0, ]
     return(items)
   }
   items = items %>%
@@ -70,4 +70,3 @@ get_forms = function(api = NULL,
   attr(items, "page_count") = content$page_count
   items
 }
-

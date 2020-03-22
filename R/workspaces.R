@@ -41,7 +41,7 @@ get_workspaces = function(api = NULL,
 #' @export
 create_workspace = function(workspace_name, api = NULL) {
   # Simple json
-  body = glue('{"name": "<workspace_name>"}',.open = "<", .close = ">")
+  body = glue('{"name": "<workspace_name>"}', .open = "<", .close = ">")
   url = "https://api.typeform.com/workspaces"
   content = post_response(api = api, url, body = body, content_type_json())
   content %>%

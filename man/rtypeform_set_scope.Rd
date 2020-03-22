@@ -2,16 +2,35 @@
 % Please edit documentation in R/options.R
 \name{rtypeform_set_scope}
 \alias{rtypeform_set_scope}
+\alias{rtypeform_set_client_id}
+\alias{rtypeform_set_client_secret}
+\alias{rtypeform_set_token}
 \title{Set access scopes for OAuth access}
 \usage{
 rtypeform_set_scope(scopes = NULL)
+
+rtypeform_set_client_id(id = NULL)
+
+rtypeform_set_client_secret(secret = NULL)
+
+rtypeform_set_token(token)
 }
 \arguments{
 \item{scopes}{A character vector of scopes}
+
+\item{id}{A client id from a typeform registered application}
+
+\item{secret}{A client secret from a typeform registered application}
+
+\item{token}{Either a string of a personal access token,
+or an OAuth token returned by \code{make_new_token}.}
 }
 \description{
-Define access scopes for an application. See \url{https://developer.typeform.com/get-started/scopes/}
+Define access scopes for an application.
+See \url{https://developer.typeform.com/get-started/scopes/}
 for more information on what scopes are allowed and their permissions.
+
+Set option for rtypeform client id, secret
 }
 \examples{
 rtypeform_set_scope(scopes = c("forms:read"))

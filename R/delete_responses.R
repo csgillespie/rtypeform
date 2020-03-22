@@ -16,4 +16,3 @@ delete_responses = function(form_id, api = NULL, included_tokens = NULL) {
              {included_tokens}")
   delete_response(api = api, url)
 }
-

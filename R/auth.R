@@ -5,18 +5,18 @@
 #'
 #' @importFrom httr oauth_app oauth2.0_token oauth_endpoint
 #' @export
-make_new_token = function(){
-  key = getOption("rtypeform.client_id","")
-  secret = getOption("rtypeform.client_secret","")
-  scope = getOption("rtypeform.scopes_selected","")
+make_new_token = function() {
+  key = getOption("rtypeform.client_id", "")
+  secret = getOption("rtypeform.client_secret", "")
+  scope = getOption("rtypeform.scopes_selected", "")
 
-  if(key == "" | is.null(key)){
+  if (key == "" || is.null(key)) {
     stop("option('rtypeform.client_id') has not been set")
   }
-  if(secret == "" | is.null(secret)){
+  if (secret == "" || is.null(secret)) {
     stop("option('rtypeform.client_secret') has not been set")
   }
-  if((length(scope) == 1 && scope == "") | is.null(scope)){
+  if ((length(scope) == 1 && scope == "") || is.null(scope)) {
     stop("option('rtypeform.scopes_selected') has not been set")
   }
 

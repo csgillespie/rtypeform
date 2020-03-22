@@ -1,7 +1,10 @@
 flatten_answers = function(a) {
   tibs = map(a, as_tibble)
   tibs %>%
-    map2(names(tibs), function(i, j) {colnames(i) = paste0(j, "_", colnames(i)); i}) %>%
+    map2(names(tibs), function(i, j) {
+      colnames(i) = paste0(j, "_", colnames(i))
+      i
+    }) %>%
     bind_cols()
 }
 
@@ -12,9 +15,9 @@ get_meta = function(content) {
   items = content$items
   if (length(items) == 0) {
     empty_meta = tibble("landing_id" = "", "token" = "",
-           "landed_at" = "", "submitted_at" = "", "user_agent" = "",
-           "platform" = "", "referer" = "", "network_id" = "",
-           "browser" = "", "score" = "")[0,]
+                        "landed_at" = "", "submitted_at" = "", "user_agent" = "",
+                        "platform" = "", "referer" = "", "network_id" = "",
+                        "browser" = "", "score" = "")[0, ]
     return(empty_meta)
   }
   meta = items %>%
@@ -63,9 +66,9 @@ globalVariables(".")
 #' @seealso https://developer.typeform.com/responses/reference/retrieve-responses/
 #' @export
 get_responses = function(form_id, api = NULL,
-                       page_size = 25,
-                       since = NULL, until = NULL, after = NULL, before = NULL,
-                       completed = NULL, query = NULL, fields = NULL) {
+                         page_size = 25,
+                         since = NULL, until = NULL, after = NULL, before = NULL,
+                         completed = NULL, query = NULL, fields = NULL) {
   # Format dates
   since = format_date_time(since)
   until = format_date_time(until)
@@ -115,9 +118,8 @@ get_responses = function(form_id, api = NULL,
     map2(question_types,
          ~select(.x,
                  "field_type", "landing_id", starts_with(paste0(.y, "_")))) %>%
-    map(unnest) %>%
+    map(~unnest(.x, cols = c())) %>%
     map(~rename(.x, type = 1, value = 3))
 
   c(list(meta = meta), all_answers)
 }
-
