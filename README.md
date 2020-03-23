@@ -36,8 +36,8 @@ library("rtypeform")
 
 ## Using this package
 
-This package can be used with either a typeform personal access token or
-by setting up an application and creating an OAuth access token.
+This package can be used with either a typeform personal access token
+**or** by setting up an application and creating an OAuth access token.
 
 A personal access token gives you full access to all of the typeform API
 for your typeforms and results. Note anyone with your personal access
@@ -54,7 +54,7 @@ removed. You can update your previous API key to replace it with a
 personal access token by following instructions at [this
 link](https://developer.typeform.com/get-started/convert-keys-to-access-tokens/).
 
-## Personal Access Token
+### Personal Access Token
 
 To use this package with a personal access token you need to first
 obtain one. It is fairly easy to obtain one. See typeform’s [help
@@ -63,7 +63,7 @@ The token will look something like
 
 > 943af478d3ff3d4d760020c11af102b79c440513
 
-## OAuth Access
+### OAuth Access
 
 When you create an application that authenticates using OAuth you will
 use scopes to define the extent of access to a users data. This way your
@@ -175,8 +175,8 @@ See the `?get_responses()` help page for other options.
 ### Looking at the responses
 
 Since the responses is list, we get to perform lots of map operations. I
-find using `purrr` and the `tidyverse` make this a bit easier. To see
-the question types we can use string a few `map()` commands together
+find using **purrr** and the **tidyverse** make this a bit easier. To
+see the question types we can use string a few `map()` commands together
 
 ``` r
 library("tidyverse")
