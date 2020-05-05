@@ -50,7 +50,7 @@ possible to determine completed/non-completed results.}
 \item{fields}{Not implemented. Pull requests welcome}
 }
 \value{
-A list. The first value is meta imformation. Subsequent elements are
+A list. The first value is meta information. Subsequent elements are
 questions..
 }
 \description{

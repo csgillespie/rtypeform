@@ -57,7 +57,7 @@ globalVariables(".")
 #' possible to determine completed/non-completed results.
 #' @param query Limit request to only responses that that include the specified term.
 #' @param fields Not implemented. Pull requests welcome
-#' @return A list. The first value is meta imformation. Subsequent elements are
+#' @return A list. The first value is meta information. Subsequent elements are
 #' questions..
 #' @importFrom purrr flatten_df map_df keep
 #' @importFrom utils read.csv

@@ -1,3 +1,6 @@
+# Dev
+  * Doc tweak
+
 # Version 2.0.1
   * Tidying up code
   * Update docs
