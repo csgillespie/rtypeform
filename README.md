@@ -27,11 +27,6 @@ and loaded in the usual way.
 
 ``` r
 library("rtypeform")
-#> This package now uses V2 of the typeform API.This update breaks ALL code (sorry, not my fault).The README provides some guidence on using the new functions.You will need to generate a new API. See the README
-#> 
-#> https://cran.r-project.org/web/packages/rtypeform/readme/README.html
-#> 
-#> for details.
 ```
 
 ## Using this package
@@ -50,9 +45,7 @@ permission for different functionality (scopes) must be granted. See the
 section below on [OAuth access](#oauth).
 
 If you have previously used the version 1 API this is now entirely
-removed. You can update your previous API key to replace it with a
-personal access token by following instructions at [this
-link](https://developer.typeform.com/get-started/convert-keys-to-access-tokens/).
+removed. You will need to generate new tokens.
 
 ### Personal Access Token
 
@@ -154,8 +147,6 @@ You can download data from a particular typeform via
 # Most recent typeform
 form_id = forms$form_id[1]
 q = get_responses(form_id, completed = TRUE)
-#> Warning: `cols` is now required.
-#> Please use `cols = c()`
 ```
 
 The object `q` is a list. The first element is `meta` that contain
@@ -166,8 +157,6 @@ There are a number of options for downloading the data. For example
 
 ``` r
 q = get_responses(form_id, completed = TRUE, page_size = 100)
-#> Warning: `cols` is now required.
-#> Please use `cols = c()`
 ```
 
 See the `?get_responses()` help page for other options.

@@ -50,7 +50,8 @@ A personal access token gives you full access to all of the typeform API for you
 
 When creating an application with an OAuth access token, explicit permission for different functionality (scopes) must be granted. See the section below on [OAuth access](#oauth). 
 
-If you have previously used the version 1 API this is now entirely removed. You can update your previous API key to replace it with a personal access token by following instructions at [this link](https://developer.typeform.com/get-started/convert-keys-to-access-tokens/).
+If you have previously used the version 1 API this is now entirely removed. You will need
+to generate new tokens.
 
 ### Personal Access Token {#pat}
 

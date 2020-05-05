@@ -1,3 +1,8 @@
+# Version 2.0.1
+  * Tidying up code
+  * Update docs
+  * Use Oauth
+
 # Version 2.0.0
   * Move to the new typeform API - breaking changes
   * Jumped to Version 2 to match the V2 API.
