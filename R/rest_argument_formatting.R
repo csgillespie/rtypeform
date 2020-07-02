@@ -1,4 +1,3 @@
-globalVariables("obj_name")
 #' @importFrom lubridate tz with_tz is.POSIXct ymd_hms
 format_date_time = function(date_time) {
   if (is.null(date_time)) return(NULL)

@@ -1,7 +1,7 @@
 Type: Package
 Package: rtypeform
 Title: Interface to 'typeform' Results
-Version: 2.0.1.9001
+Version: 2.0.2.9001
 Authors@R: 
     person(given = "Colin",
            family = "Gillespie",
@@ -16,7 +16,7 @@ URL: https://github.com/csgillespie/rtypeform
 BugReports: https://github.com/csgillespie/rtypeform/issues
 Imports: 
     assertthat,
-    dplyr,
+    dplyr (>= 1.0.0),
     glue,
     httr,
     jsonlite,
@@ -24,9 +24,10 @@ Imports:
     purrr,
     tibble,
     tidyr,
-    utils
+    utils,
+    rlang
 Suggests: 
     testthat
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

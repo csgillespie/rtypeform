@@ -1,4 +1,3 @@
-globalVariables(c("forms", "name1"))
 
 #' @rdname get_workspaces
 #' @export
@@ -15,6 +14,7 @@ get_number_of_workspace = function(api = NULL, search = NULL) {
 #' @export
 #' @inheritParams get_api
 #' @inheritParams get_forms
+#' @importFrom rlang .data
 get_workspaces = function(api = NULL,
                           search = NULL,
                           page = 1,
@@ -27,7 +27,7 @@ get_workspaces = function(api = NULL,
   content = get_response(api = api, url)
   items = content$items
   workspaces = items %>%
-    select(-forms, -self) %>%
+    select(-.data$forms, -.data$self) %>%
     as_tibble() %>%
     bind_cols(items$forms, items$self)
   attr(workspaces, "page_count") = content$page_space
@@ -36,6 +36,7 @@ get_workspaces = function(api = NULL,
 }
 
 #' @importFrom httr content_type_json
+#' @importFrom rlang .data
 #' @param workspace_name The name workspace name
 #' @rdname get_workspaces
 #' @export
@@ -46,7 +47,7 @@ create_workspace = function(workspace_name, api = NULL) {
   content = post_response(api = api, url, body = body, content_type_json())
   content %>%
     flatten_dfc() %>%
-    rename(workspace_name = name1)
+    rename(workspace_name = .data$name1)
 }
 
 #' @rdname get_workspaces

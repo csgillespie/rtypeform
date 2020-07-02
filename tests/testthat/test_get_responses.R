@@ -4,5 +4,18 @@ test_that("Testing get_questionnaire_typeforms", {
   form_id = get_forms()$form_id[1]
   form = get_responses(form_id = form_id)
   expect_s3_class(form$meta, "tbl_df")
-  expect_equal(ncol(form$meta), 11)
+  cols = c(
+    "landing_id",
+    "token",
+    "landed_at",
+    "submitted_at",
+    "user_agent",
+    "platform",
+    "referer",
+    "network_id",
+    "browser",
+    "score"
+  )
+  expect_true(all(cols %in% colnames(form$meta)))
+  # XXX expect_equal(ncol(form$meta), 11)
 })

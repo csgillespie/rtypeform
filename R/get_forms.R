@@ -13,7 +13,6 @@ get_number_of_forms = function(api = NULL,
   content$total_items
 }
 
-globalVariables(c("settings", "self", "theme", "href", "href1", "display", "last_updated_at"))
 #' Fetch all available typeforms
 #'
 #' This function returns a two column data frame containing the typeform names and
@@ -28,6 +27,7 @@ globalVariables(c("settings", "self", "theme", "href", "href1", "display", "last
 #' @return A list containing content and the response.
 #' @import dplyr purrr
 #' @importFrom tidyr unnest
+#' @importFrom rlang .data
 #' @export
 get_forms = function(api = NULL,
                      page = 1,
@@ -53,18 +53,20 @@ get_forms = function(api = NULL,
                     is_trial = "", questions = "", theme = "", questionnaire_url = "")[0, ]
     return(items)
   }
+
+  theme = items$theme %>% select(theme = .data$href)
+  self = items$self %>% rename(questions = .data$href)
+
   items = items %>%
-    select(-settings, -self, -theme, -"_links") %>%
+    select(-.data$settings, -.data$self, -.data$theme, -.data[["_links"]]) %>%
     as_tibble() %>%
     bind_cols(items$settings,
-              items$self,
-              items$theme,
+              self,
+              theme,
               items$`_links`) %>%
-    rename(questions = href,
-           theme = href1,
-           questionnaire_url = display,
-           last_updated = last_updated_at,
-           form_id = id) %>%
+    rename(questionnaire_url = .data$display,
+           last_updated = .data$last_updated_at,
+           form_id = .data$id) %>%
     mutate(last_updated = lubridate::ymd_hms(items$last_updated))
   attr(items, "total_items") = content$total_items
   attr(items, "page_count") = content$page_count
