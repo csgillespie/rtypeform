@@ -1,6 +1,9 @@
 # Dev
   * Doc tweak
 
+# Version 2.0.2
+  * Fixed an issue introduced with dplyr 1.0.0 in handling of duplicate variable names
+
 # Version 2.0.1
   * Tidying up code
   * Update docs
