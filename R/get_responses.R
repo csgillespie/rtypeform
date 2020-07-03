@@ -8,9 +8,9 @@ flatten_answers = function(a) {
     bind_cols()
 }
 
-globalVariables(c("answers", "metadata", "hidden", "calculated",
-                  "landed_at", "submitted_at"))
+
 #' @importFrom dplyr matches
+#' @importFrom rlang .data
 get_meta = function(content) {
   items = content$items
   if (length(items) == 0) {
@@ -21,11 +21,11 @@ get_meta = function(content) {
     return(empty_meta)
   }
   meta = items %>%
-    select(-answers, -metadata, -matches("hidden"), -matches("calculated")) %>%
+    select(-.data$answers, -.data$metadata, -matches("hidden"), -matches("calculated")) %>%
     as_tibble() %>%
     bind_cols(items$metadata, items$hidden, items$calculated) %>%
-    mutate(landed_at = ymd_hms(landed_at),
-           submitted_at = ymd_hms(submitted_at))
+    mutate(landed_at = ymd_hms(.data$landed_at),
+           submitted_at = ymd_hms(.data$submitted_at))
 
   attr(meta, "total_items") = content$total_items
   attr(meta, "page_count") = content$page_count
@@ -33,7 +33,6 @@ get_meta = function(content) {
 }
 
 
-globalVariables(".")
 #' Download questionnaire results
 #'
 #' Download results for a particular typeform questionnaire.
@@ -105,8 +104,8 @@ get_responses = function(form_id, api = NULL,
   all_answers = answers %>%
     map(flatten_answers) %>%
     map2(items$landing_id, ~mutate(.x, landing_id = .y)) %>%
-    bind_rows() %>%
-    split(.$field_id)
+    bind_rows()
+  all_answers = split(all_answers, all_answers$field_id)
 
   question_types = all_answers %>%
     map(~select(.x, type_value)) %>%
@@ -117,7 +116,7 @@ get_responses = function(form_id, api = NULL,
   all_answers = all_answers %>%
     map2(question_types,
          ~select(.x,
-                 "field_type", "landing_id", starts_with(paste0(.y, "_")))) %>%
+                 .data$field_type, .data$landing_id, starts_with(paste0(.y, "_")))) %>%
     map(~unnest(.x, cols = c())) %>%
     map(~rename(.x, type = 1, value = 3))
 

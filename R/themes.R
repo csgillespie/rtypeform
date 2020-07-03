@@ -1,5 +1,3 @@
-globalVariables(c("colors", "background"))
-
 #' @title Theme functions
 #'
 #' Theme API functions
@@ -55,6 +53,7 @@ get_theme = function(theme_id, api = NULL) {
 
 #' @rdname create_theme
 #' @inheritParams get_forms
+#' @importFrom rlang .data
 #' @export
 get_themes = function(api = NULL, page = 1, page_size = 10) {
   page = create_argument(page)
@@ -64,7 +63,7 @@ get_themes = function(api = NULL, page = 1, page_size = 10) {
   content = get_response(api = api, url)
   items = content$items
   backgrounds = items %>%
-    select(-colors, -background) %>%
+    select(-.data$colors, -.data$background) %>%
     as_tibble() %>%
     bind_cols(items$colors, items$background)
 

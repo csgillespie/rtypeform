@@ -1,4 +1,3 @@
-globalVariables("obj_name")
 #' @importFrom lubridate tz with_tz is.POSIXct ymd_hms
 format_date_time = function(date_time) {
   if (is.null(date_time)) return(NULL)
@@ -15,7 +14,7 @@ format_date_time = function(date_time) {
 
 create_argument = function(arg) {
   if (is.null(arg) || nchar(arg) == 0) return("")
-  obj_name = deparse(substitute(arg))
+  obj_name = deparse(substitute(arg)) # nolint
   glue("{obj_name}={arg}")
 }
 
