@@ -7,7 +7,7 @@ Authors@R: c(
            family = "Gillespie",
            role = c("aut", "cre"),
            email = "csgillespie@gmail.com"),
-    person(given = "Jamie", family = "Owen", role = c("aut"), email = "jamie@jumpingrivers.com")
+    person(given = "Jamie", family = "Owen", role = c("aut"), email = "jamie@jumpingrivers.com"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: An R interface to the 'typeform'
     <https://typeform.com> application program interface.  Also provides
