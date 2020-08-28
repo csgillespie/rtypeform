@@ -1,7 +1,4 @@
-# Dev
-  * Doc tweak
-
-# Version 2.0.2
+# rtypeform 2.0.3 _2020-08-28_
   * Fixed an issue introduced with dplyr 1.0.0 in handling of duplicate variable names
 
 # Version 2.0.1
