@@ -8,9 +8,9 @@ Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
 [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
-[Typeform](https://referral.typeform.com/mzcsnTI) is a company that
-specializes in online form building. This R package allows users to
-download their form results through the exposed API (V2).
+[Typeform](https://www.typeform.com/) is a company that specializes in
+online form building. This R package allows users to download their form
+results through the exposed API (V2).
 
 \*\* The `rtypeform` package now uses V2. This is a breaking change from
 the previous version.\*\*
