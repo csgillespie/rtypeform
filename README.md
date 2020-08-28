@@ -4,11 +4,11 @@
 
 [![Build
 Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
-[![Downloads](http://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
+[![Downloads](https://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
 [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
 
-[Typeform](http://referral.typeform.com/mzcsnTI) is a company that
+[Typeform](https://referral.typeform.com/mzcsnTI) is a company that
 specializes in online form building. This R package allows users to
 download their form results through the exposed API (V2).
 
@@ -118,7 +118,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 3
+#> [1] 135
 ```
 
 If you don’t pass your `api` token as an argument, it will attempt to
