@@ -1,3 +1,6 @@
+# rtypeform 2.1.0 _2020-08-29_
+  * CRAN release
+
 # rtypeform 2.0.3 _2020-08-28_
   * Fixed an issue introduced with dplyr 1.0.0 in handling of duplicate variable names
 
