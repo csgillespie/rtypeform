@@ -1,25 +1,38 @@
-cache: packages
+os: linux
 language: r
+cache: packages
+dist: xenial
+
 r:
 - oldrel
 - release
 - devel
+
 env:
   global:
   - NO_IMPORTS=2
   - secure: NrDDGmAgvMucWUK+4KYMqKGqueR2fCcBBxBbo211EgzR3E4e0eBzVCDoB1ZqGG/6Wqh6bndsrdW3+NQSJfTzktNzz4MVhaDOVsJK0bviSPAUHUyER+mP7xyeG3u0uME/RbQUlJTvzHEI+amYkHQ9KBFBGW5ns+3lyuuMn1lKd93uaaWav7QY5Xkf2pK1kvEstHEkvjSyPSnbErXPzl5xJ1yWUFe+JqJgl7LJnmGHH97RwmU3FCUN5Cze0qBJtyHLOpXsivYkyDdhgX1ZCiECz3eO9EuXvvlPdmW2QiqhHVkp2GVa12jF7p7mvrQXRp6FWvR/PAvBkMEfCfH5krMiqi02d5d/VUTvryDkH68QUQ9tBlvDzOltuKgueZqWse6Rvnuxt0GN5Gvol/AAfyldM9ow2eRbaozIVexqixHNKDf15O+CFG882mfF5hIVlZeSa924T+mxO8/AEFsXm65EKXBGq3jGA6ye6Za9ZCydwBsdDo/JO3yf7Q5Dt/sdjrl3ckZAAoz0doEQb+lcyurbFy4WegkA9+iqz0s7qZMs/yqRywDzGFsmFlRYAJHeSCzuYtkuf8uFptyEfQNpU7iOJ/go/+e2URumwMN33p+dLhOzw2GrL/0l9/dzNxk66Kc52J2phKWyP49IcjYL0Ttx+24mg5PWRoB5OOXJ8h5Xrqk=
+
 r_packages:
-- lintr
-- covr
+  - lintr
+  - covr
 r_github_packages:
-- jumpingrivers/inteRgrate
+  - jumpingrivers/inteRgrate
+
 notifications:
   email:
     on_success: change
     on_failure: change
+
 before_install:
-- sudo apt-get install -y ghostscript
+  - sudo apt-get install -y ghostscript
+  - echo "options(repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/xenial/latest'))" >> ~/.Rprofile.site
+  - echo "options(HTTPUserAgent = paste0('R/', getRversion(), ' R (',
+        paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']),
+        ')'))" >> ~/.Rprofile.site
+
 script:
-- Rscript -e "inteRgrate::check_via_env(default = TRUE)"
+  - Rscript -e "inteRgrate::check_via_env(default = TRUE)"
+
 after_success:
-- Rscript -e "if(length(grep('1\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
+  - Rscript -e "if(length(grep('1\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
