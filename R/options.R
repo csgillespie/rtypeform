@@ -4,14 +4,13 @@
 #' See \url{https://developer.typeform.com/get-started/scopes/}
 #' for more information on what scopes are allowed and their permissions.
 #'
-#' @importFrom assertthat assert_that
 #' @param scopes A character vector of scopes
 #' @export
 #' @examples
 #' rtypeform_set_scope(scopes = c("forms:read"))
 rtypeform_set_scope = function(scopes = NULL) {
   if (!is.null(scopes)) {
-    assert_that(is.character(scopes))
+    stopifnot("scopes should be a character" = is.character(scopes))
     options("rtypeform.scopes_selected" = scopes)
   }
   return(invisible(NULL))
@@ -23,7 +22,7 @@ rtypeform_set_scope = function(scopes = NULL) {
 #' @export
 rtypeform_set_client_id = function(id = NULL) {
   if (!is.null(id)) {
-    assert_that(is.character(id))
+    stopifnot("id should be a character" = is.character(id))
     options("rtypeform.client_id" = id)
   }
   return(invisible(NULL))
@@ -34,7 +33,7 @@ rtypeform_set_client_id = function(id = NULL) {
 #' @export
 rtypeform_set_client_secret = function(secret = NULL) {
   if (!is.null(secret)) {
-    assert_that(is.character(secret))
+    stopifnot("secret should be a character" = is.character(secret))
     options("rtypeform.client_secret" = secret)
   }
   return(invisible(NULL))

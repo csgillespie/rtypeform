@@ -5,6 +5,6 @@
 #' @inheritParams get_responses
 #' @export
 delete_form = function(form_id, api = NULL) {
-  url = glue("https://api.typeform.com/forms/{form_id}")
+  url = glue::glue("https://api.typeform.com/forms/{form_id}")
   delete_response(api, url)
 }

@@ -14,7 +14,7 @@ get_number_of_seats = function(api = NULL) {
 get_teams = function(api = NULL) {
   url = "https://api.typeform.com/teams/mine"
   content = get_response(api, url)
-  members = as_tibble(content$members)
+  members = dplyr::as_tibble(content$members)
   attr(members, "total_seats") = content$total_seats
   members
 }

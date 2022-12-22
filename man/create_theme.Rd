@@ -6,9 +6,7 @@
 \alias{get_themes}
 \alias{update_theme}
 \alias{delete_theme}
-\title{Theme functions
-
-Theme API functions}
+\title{Theme functions}
 \usage{
 create_theme(
   name,
@@ -76,7 +74,5 @@ the environment variable \code{Sys.getenv("typeform_api2")} is used.}
 \item{page_size}{Number of results to retrieve per page. Default is 10. Maximum is 200.}
 }
 \description{
-Theme functions
-
 Theme API functions
 }
