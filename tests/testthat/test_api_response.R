@@ -6,7 +6,7 @@ test_that("Testing api response", {
 
 test_that("Testing get_api", {
   skip_on_cran()
-  api2 = Sys.getenv("typeform_api2")
+  api2 = Sys.getenv("typeform_api2", "an_api_test_key")
   expect_equal(get_api(), Sys.getenv("typeform_api2"))
   Sys.unsetenv("typeform_api2")
 
