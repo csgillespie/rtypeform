@@ -13,9 +13,6 @@ Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://
 online form building. This R package allows users to download their form
 results through the exposed API (V2).
 
-\*\* The `rtypeform` package now uses V2. This is a breaking change from
-the previous version.\*\*
-
 ## Installation
 
 The package can be installed from CRAN
@@ -68,7 +65,7 @@ behalf.
 will get you started with registering a new application on your account.
 
 Once you have your client id and client secret you can use the
-**rtypeform** package to set these as options.
+{rtypeform} package to set these as options.
 
 ``` r
 rtypeform_set_client_id(my_client_id)
@@ -81,7 +78,7 @@ kept safe.
 
 Having set the client id and secret, before we can obtain an access
 token we also need to define the scope of our application.
-`rtypeform_set_scope` takes as argument a character vector of allowed
+`rtypeform_set_scope()` takes as argument a character vector of allowed
 access scopes. For more information see the scopes section below.
 
 ``` r
@@ -101,7 +98,7 @@ token can be cached in a local .httr-oauth file between sessions.
 
 You define the scope at the time that the access token is generated. To
 discover what each scope allows access to, see
-[here.](https://developer.typeform.com/get-started/scopes/)
+[here](https://developer.typeform.com/get-started/scopes/).
 
 ## Using the package
 
@@ -160,13 +157,13 @@ There are a number of options for downloading the data. For example
 q = get_responses(form_id, completed = TRUE, page_size = 100)
 ```
 
-See the `?get_responses()` help page for other options.
+See the `?get_responses` help page for other options.
 
 ### Looking at the responses
 
 Since the responses is list, we get to perform lots of map operations. I
-find using **purrr** and the **tidyverse** make this a bit easier. To
-see the question types we can use string a few `map()` commands together
+find using {purrr} and the {tidyverse} make this a bit easier. To see
+the question types we can use string a few `map()` commands together
 
 ``` r
 library("tidyverse")
