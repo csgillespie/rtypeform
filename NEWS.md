@@ -1,3 +1,6 @@
+# rtypeform 2.1.9001 _2022-12-22_
+  * chore: Cleaning, linting, & namespacing
+
 # rtypeform 2.1.0 _2020-08-29_
   * CRAN release
 
@@ -12,7 +15,7 @@
 # rtypeform 2.0.0
   * Move to the new typeform API - breaking changes
   * Jumped to Version 2 to match the V2 API.
-  
+
 # rtypeform 0.4.0
   * Bug fix: Empty data frames now returned
   * Intended to the final version using the V1 data API. Added a start-up message.
@@ -32,8 +35,8 @@
   * More consistent response with `get_questionnaire()`.
 
 # rtypeform 0.3.0
-  * Breaking changes to the API. `get_results()` now depreciated. 
-  Instead, use `get_questionnaire()`. This returns a list with http_status, 
+  * Breaking changes to the API. `get_results()` now depreciated.
+  Instead, use `get_questionnaire()`. This returns a list with http_status,
     question stats, questions, completed, and uncompleted responses (thanks to @hrbrmstr).
 
 # rtypeform 0.2.1

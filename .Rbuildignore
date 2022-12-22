@@ -7,3 +7,4 @@ README.html
 ^\.httr-oauth$
 LICENSE
 ^.lintr$
+^\.github$

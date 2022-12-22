@@ -5,8 +5,9 @@
 [![Build
 Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
 [![Downloads](https://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
 [![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
+[![R-CMD-check](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml)
 
 [Typeform](https://www.typeform.com) is a company that specializes in
 online form building. This R package allows users to download their form
@@ -118,7 +119,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 135
+#> [1] 332
 ```
 
 If you don’t pass your `api` token as an argument, it will attempt to
@@ -137,9 +138,9 @@ To set the access token for the current session you can use
 rtypeform_set_token(api)
 ```
 
-set (see Efficient R programming
-[Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron)
-for more details).
+set (see Efficient R programming [Chapter
+2](https://csgillespie.github.io/efficientR/set-up.html#renviron) for
+more details).
 
 You can download data from a particular typeform via
 
@@ -179,27 +180,25 @@ question_types = q[-1] %>% # Remove the meta
 
 Imagine we only want:
 
-  - completed results, so we add the parameter `completed = TRUE`.
-  - a maximum of 5 results, so we add the parameter `page_size = 5`.
-  - results since `2018-01-01 11:00:00`.
-
-<!-- end list -->
+- completed results, so we add the parameter `completed = TRUE`.
+- a maximum of 5 results, so we add the parameter `page_size = 5`.
+- results since `2018-01-01 11:00:00`.
 
 ``` r
 since = "2018-01-01 11:00:00"
-# convert to date-time 
+# convert to date-time
 since = lubridate::ymd_hms(since)
-q = get_responses(form_id, completed = TRUE, 
+q = get_responses(form_id, completed = TRUE,
                   page_size = 5, since = since)
 ```
 
 ## Other information
 
-  - If you have any suggestions or find bugs, please use the github
-    [issue tracker](https://github.com/csgillespie/rtypeform/issues).
-  - Feel free to submit pull requests.
+- If you have any suggestions or find bugs, please use the github [issue
+  tracker](https://github.com/csgillespie/rtypeform/issues).
+- Feel free to submit pull requests.
 
------
+------------------------------------------------------------------------
 
 Development of this package was supported by [Jumping
 Rivers](https://www.jumpingrivers.com)

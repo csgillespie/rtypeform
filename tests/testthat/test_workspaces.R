@@ -14,5 +14,4 @@ test_that("Testing teams", {
   delete_workspace(new_workspace$id)
   w_new = get_workspaces()
   expect_equal(nrow(w_old), nrow(w_new))
-
 })

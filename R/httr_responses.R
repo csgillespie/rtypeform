@@ -5,7 +5,7 @@
 #' @export
 get_authorization = function(api) {
   api = get_api(api)
-  httr::add_headers(authorization = glue("bearer {api}"))
+  httr::add_headers(authorization = glue::glue("bearer {api}"))
 }
 
 #' Check api response
@@ -14,7 +14,6 @@ get_authorization = function(api) {
 #' @param resp A response
 #' @param content The content
 #' @export
-#' @importFrom httr status_code
 check_api_response = function(resp, content) {
   status_code = httr::status_code(resp)
   if (status_code %in% c(200, 201, 204)) return(invisible(TRUE))
@@ -30,7 +29,6 @@ check_api_response = function(resp, content) {
 #' @param api An authentication key
 #' @param url The URL of the site
 #' @export
-#' @importFrom httr GET user_agent content add_headers
 get_response = function(api, url) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
@@ -43,7 +41,6 @@ get_response = function(api, url) {
   content
 }
 
-#' @importFrom httr PUT
 put_response = function(api, url, ...) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
@@ -57,7 +54,6 @@ put_response = function(api, url, ...) {
   check_api_response(resp, content)
 }
 
-#' @importFrom httr DELETE
 delete_response = function(api, url) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
@@ -80,7 +76,6 @@ delete_response = function(api, url) {
 #' @param body The infrormation sent out to the server. e.g. the title
 #' @param ... Other arguments
 #' @export
-#' @importFrom httr POST
 post_response = function(api, url, body = NULL, ...) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
@@ -93,7 +88,6 @@ post_response = function(api, url, body = NULL, ...) {
   content
 }
 
-#' @importFrom httr POST
 patch_response = function(api, url, body = NULL, ...) {
   authorization = get_authorization(api)
   ua = httr::user_agent("https://github.com/csgillespie/rtypeform")
