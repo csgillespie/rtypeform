@@ -6,9 +6,7 @@
 \alias{get_themes}
 \alias{update_theme}
 \alias{delete_theme}
-\title{Theme functions
-
-Theme API functions}
+\title{Theme functions}
 \usage{
 create_theme(
   name,
@@ -46,28 +44,28 @@ update_theme(
 delete_theme(theme_id, api = NULL)
 }
 \arguments{
-\item{name}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{name}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
 \item{api}{Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
 the environment variable \code{Sys.getenv("typeform_api2")} is used.}
 
-\item{background_href}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{background_href}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{background_layout}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{background_layout}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{background_brightness}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{background_brightness}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{colors_answer}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{colors_answer}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{colors_background}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{colors_background}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{colors_button}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{colors_button}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{colors_question}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{colors_question}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{font}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{font}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
-\item{has_transparent_button}{See https://developer.typeform.com/create/reference/create-theme/}
+\item{has_transparent_button}{See https://www.typeform.com/developers/create/reference/create-theme/}
 
 \item{theme_id}{The theme id}
 
@@ -76,7 +74,5 @@ the environment variable \code{Sys.getenv("typeform_api2")} is used.}
 \item{page_size}{Number of results to retrieve per page. Default is 10. Maximum is 200.}
 }
 \description{
-Theme functions
-
 Theme API functions
 }

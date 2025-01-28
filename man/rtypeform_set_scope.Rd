@@ -27,7 +27,7 @@ or an OAuth token returned by \code{make_new_token}.}
 }
 \description{
 Define access scopes for an application.
-See \url{https://developer.typeform.com/get-started/scopes/}
+See \url{https://www.typeform.com/developers/get-started/scopes/}
 for more information on what scopes are allowed and their permissions.
 
 Set option for rtypeform client id, secret

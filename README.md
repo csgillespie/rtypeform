@@ -3,17 +3,15 @@
 # API to typeform data sets
 
 [![Build
-Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
+Status](https://app.travis-ci.com/csgillespie/rtypeform.svg?branch=master)](https://app.travis-ci.com/csgillespie/rtypeform)
 [![Downloads](https://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
-[![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
+[![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://app.codecov.io/github/csgillespie/rtypeform?branch=master)
+[![R-CMD-check](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml)
 
 [Typeform](https://www.typeform.com) is a company that specializes in
 online form building. This R package allows users to download their form
 results through the exposed API (V2).
-
-\*\* The `rtypeform` package now uses V2. This is a breaking change from
-the previous version.\*\*
 
 ## Installation
 
@@ -51,7 +49,7 @@ removed. You will need to generate new tokens.
 
 To use this package with a personal access token you need to first
 obtain one. It is fairly easy to obtain one. See typeform’s [help
-page](https://developer.typeform.com/get-started/personal-access-token/).
+page](https://www.typeform.com/developers/get-started/personal-access-token/).
 The token will look something like
 
 > 943af478d3ff3d4d760020c11af102b79c440513
@@ -63,11 +61,12 @@ use scopes to define the extent of access to a users data. This way your
 app can request a users permission to undertake actions on that users
 behalf.
 
-[This link](https://developer.typeform.com/get-started/applications/)
+[This
+link](https://www.typeform.com/developers/get-started/applications/)
 will get you started with registering a new application on your account.
 
 Once you have your client id and client secret you can use the
-**rtypeform** package to set these as options.
+{rtypeform} package to set these as options.
 
 ``` r
 rtypeform_set_client_id(my_client_id)
@@ -80,7 +79,7 @@ kept safe.
 
 Having set the client id and secret, before we can obtain an access
 token we also need to define the scope of our application.
-`rtypeform_set_scope` takes as argument a character vector of allowed
+`rtypeform_set_scope()` takes as argument a character vector of allowed
 access scopes. For more information see the scopes section below.
 
 ``` r
@@ -100,7 +99,7 @@ token can be cached in a local .httr-oauth file between sessions.
 
 You define the scope at the time that the access token is generated. To
 discover what each scope allows access to, see
-[here.](https://developer.typeform.com/get-started/scopes/)
+[here](https://www.typeform.com/developers/get-started/scopes/).
 
 ## Using the package
 
@@ -118,7 +117,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 135
+#> [1] 476
 ```
 
 If you don’t pass your `api` token as an argument, it will attempt to
@@ -137,9 +136,9 @@ To set the access token for the current session you can use
 rtypeform_set_token(api)
 ```
 
-set (see Efficient R programming
-[Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#renviron)
-for more details).
+set (see Efficient R programming [Chapter
+2](https://csgillespie.github.io/efficientR/set-up.html#renviron) for
+more details).
 
 You can download data from a particular typeform via
 
@@ -159,13 +158,13 @@ There are a number of options for downloading the data. For example
 q = get_responses(form_id, completed = TRUE, page_size = 100)
 ```
 
-See the `?get_responses()` help page for other options.
+See the `?get_responses` help page for other options.
 
 ### Looking at the responses
 
 Since the responses is list, we get to perform lots of map operations. I
-find using **purrr** and the **tidyverse** make this a bit easier. To
-see the question types we can use string a few `map()` commands together
+find using {purrr} and the {tidyverse} make this a bit easier. To see
+the question types we can use string a few `map()` commands together
 
 ``` r
 library("tidyverse")
@@ -179,27 +178,25 @@ question_types = q[-1] %>% # Remove the meta
 
 Imagine we only want:
 
-  - completed results, so we add the parameter `completed = TRUE`.
-  - a maximum of 5 results, so we add the parameter `page_size = 5`.
-  - results since `2018-01-01 11:00:00`.
-
-<!-- end list -->
+- completed results, so we add the parameter `completed = TRUE`.
+- a maximum of 5 results, so we add the parameter `page_size = 5`.
+- results since `2018-01-01 11:00:00`.
 
 ``` r
 since = "2018-01-01 11:00:00"
-# convert to date-time 
+# convert to date-time
 since = lubridate::ymd_hms(since)
-q = get_responses(form_id, completed = TRUE, 
+q = get_responses(form_id, completed = TRUE,
                   page_size = 5, since = since)
 ```
 
 ## Other information
 
-  - If you have any suggestions or find bugs, please use the github
-    [issue tracker](https://github.com/csgillespie/rtypeform/issues).
-  - Feel free to submit pull requests.
+- If you have any suggestions or find bugs, please use the github [issue
+  tracker](https://github.com/csgillespie/rtypeform/issues).
+- Feel free to submit pull requests.
 
------
+------------------------------------------------------------------------
 
 Development of this package was supported by [Jumping
 Rivers](https://www.jumpingrivers.com)

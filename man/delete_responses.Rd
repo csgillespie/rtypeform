@@ -16,7 +16,7 @@ the environment variable \code{Sys.getenv("typeform_api2")} is used.}
 can be extracted from the meta data frame via \code{get_form}.}
 }
 \value{
-If successful, the function will return (invisibily) \code{TRUE}
+If successful, the function will return (invisibly) \code{TRUE}
 }
 \description{
 Delete entries in a type form- use with care!

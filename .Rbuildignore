@@ -7,3 +7,9 @@ README.html
 ^\.httr-oauth$
 LICENSE
 ^.lintr$
+^\.github$
+^.commitlintrc.yml$
+^.husky$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
