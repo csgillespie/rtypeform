@@ -1,6 +1,6 @@
-
 # rtypeform 2.1.1 _2022-12-22_
   * chore: Cleaning, linting, & namespacing
+  * fix: Update typeform URLs
 
 # rtypeform 2.1.0 _2020-08-29_
   * CRAN release

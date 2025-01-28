@@ -2,16 +2,16 @@
 #'
 #' Theme API functions
 #' @inheritParams get_api
-#' @param name See https://developer.typeform.com/create/reference/create-theme/
-#' @param background_href See https://developer.typeform.com/create/reference/create-theme/
-#' @param background_layout See https://developer.typeform.com/create/reference/create-theme/
-#' @param background_brightness See https://developer.typeform.com/create/reference/create-theme/
-#' @param colors_answer See https://developer.typeform.com/create/reference/create-theme/
-#' @param colors_background See https://developer.typeform.com/create/reference/create-theme/
-#' @param colors_button See https://developer.typeform.com/create/reference/create-theme/
-#' @param colors_question See https://developer.typeform.com/create/reference/create-theme/
-#' @param font See https://developer.typeform.com/create/reference/create-theme/
-#' @param has_transparent_button See https://developer.typeform.com/create/reference/create-theme/
+#' @param name See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param background_href See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param background_layout See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param background_brightness See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param colors_answer See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param colors_background See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param colors_button See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param colors_question See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param font See https://www.typeform.com/developers/create/reference/create-theme/
+#' @param has_transparent_button See https://www.typeform.com/developers/create/reference/create-theme/
 #' @export
 create_theme = function(
     name, api = NULL,

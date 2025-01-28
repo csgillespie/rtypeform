@@ -16,8 +16,8 @@ get_number_of_forms = function(api = NULL,
 #'
 #' This function returns a two column data frame containing the typeform names and
 #' their associated ids.
-#' @param api Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
-#' the environment variable \code{Sys.getenv("typeform_api")} is used.
+#' @param api Default `NULL`. Your private api key. If `api` is `NULL`,
+#' the environment variable `Sys.getenv("typeform_api")` is used.
 #' @param search Returns items that contain the specified string.
 #' @param page The page of results to retrieve. Default 1 is the first page of results.
 #' @param page_size Number of results to retrieve per page. Default is 10. Maximum is 200.

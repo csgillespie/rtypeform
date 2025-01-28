@@ -1,10 +1,10 @@
 #' Retrieve API key from Renviron
 #'
-#' If the entry \code{typeform_api2} exists in your
-#' \code{.Renviron} return that value. Otherwise, raise an error.
-#' @param api Default \code{NULL}. Your private api key. If \code{api} is \code{NULL},
-#' the environment variable \code{Sys.getenv("typeform_api2")} is used.
-#' @details In version 1 of the typeform API, rtypeform looked for the key \code{typeform_api},
+#' If the entry `typeform_api2` exists in your
+#' `.Renviron` return that value. Otherwise, raise an error.
+#' @param api Default `NULL`. Your private api key. If `api` is `NULL`,
+#' the environment variable `Sys.getenv("typeform_api2")` is used.
+#' @details In version 1 of the typeform API, rtypeform looked for the key `typeform_api`,
 #' @export
 get_api = function(api = NULL) {
   if (is.null(api)) api = Sys.getenv("typeform_api2")

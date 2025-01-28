@@ -57,5 +57,5 @@ questions..
 Download results for a particular typeform questionnaire.
 }
 \seealso{
-https://developer.typeform.com/responses/reference/retrieve-responses/
+\href{https://www.typeform.com/developers/responses/reference/retrieve-responses/}{typeform/retrieve-responses}
 }

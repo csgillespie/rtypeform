@@ -4,8 +4,8 @@
 #' @inheritParams get_api
 #' @inheritParams get_responses
 #' @param included_tokens A vector of tokens to delete. Maximum 1000. Token ids
-#' can be extracted from the meta data frame via \code{get_form}.
-#' @return If successful, the function will return (invisibly) \code{TRUE}
+#' can be extracted from the meta data frame via `get_form`.
+#' @return If successful, the function will return (invisibly) `TRUE`
 #' @export
 delete_responses = function(form_id, api = NULL, included_tokens = NULL) {
   included_tokens = glue::glue_collapse(included_tokens, sep = ",")

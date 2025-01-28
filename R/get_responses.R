@@ -37,25 +37,25 @@ get_meta = function(content) {
 #' @param form_id The form id of the typeform you want the results for.
 #' @param page_size Maximum number of responses.
 #' Default value is 25. Maximum value is 1000.
-#' @param since default \code{NULL}. Fetch only the results after a specific date and
-#' time. If \code{NULL} return all results. This should be a date time object.
+#' @param since default `NULL`. Fetch only the results after a specific date and
+#' time. If `NULL` return all results. This should be a date time object.
 #' The timezone of the object will be converted to UTC.
-#' @param until default \code{NULL}. Similar to \code{since}.
-#' @param after default \code{NULL}. Fetch only the results after a specific date and
-#' time. If \code{NULL} return all results. If you use the after parameter, the responses
+#' @param until default `NULL`. Similar to `since`.
+#' @param after default `NULL`. Fetch only the results after a specific date and
+#' time. If `NULL` return all results. If you use the after parameter, the responses
 #' will be sorted in the order that our system processed them
 #' (instead of the default order, submitted_at).
 #' This ensures that you can traverse the complete set of responses without repeating entries.
-#' @param before default \code{NULL}. Similar to \code{after}
-#' @param completed default \code{NULL}, return all results.
-#' Fetch only completed results (\code{TRUE}), or only not-completed results
-#' (=\code{FALSE}). If \code{NULL} return all results. Warning. It's not
+#' @param before default `NULL`. Similar to `after`
+#' @param completed default `NULL`, return all results.
+#' Fetch only completed results (`TRUE`), or only not-completed results
+#' (=`FALSE`). If `NULL` return all results. Warning. It's not
 #' possible to determine completed/non-completed results.
 #' @param query Limit request to only responses that that include the specified term.
 #' @param fields Not implemented. Pull requests welcome
 #' @return A list. The first value is meta information. Subsequent elements are
 #' questions..
-#' @seealso https://developer.typeform.com/responses/reference/retrieve-responses/
+#' @seealso [typeform/retrieve-responses](https://www.typeform.com/developers/responses/reference/retrieve-responses/)
 #' @export
 get_responses = function(form_id, api = NULL,
                          page_size = 25,

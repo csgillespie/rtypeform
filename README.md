@@ -3,10 +3,10 @@
 # API to typeform data sets
 
 [![Build
-Status](https://travis-ci.org/csgillespie/rtypeform.svg?branch=master)](https://travis-ci.org/csgillespie/rtypeform)
+Status](https://app.travis-ci.com/csgillespie/rtypeform.svg?branch=master)](https://app.travis-ci.com/csgillespie/rtypeform)
 [![Downloads](https://cranlogs.r-pkg.org/badges/rtypeform?color=brightgreen)](https://cran.r-project.org/package=rtypeform)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rtypeform)](https://cran.r-project.org/package=rtypeform)
-[![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/rtypeform?branch=master)
+[![codecov.io](https://codecov.io/github/csgillespie/rtypeform/coverage.svg?branch=master)](https://app.codecov.io/github/csgillespie/rtypeform?branch=master)
 [![R-CMD-check](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csgillespie/rtypeform/actions/workflows/R-CMD-check.yaml)
 
 [Typeform](https://www.typeform.com) is a company that specializes in
@@ -49,7 +49,7 @@ removed. You will need to generate new tokens.
 
 To use this package with a personal access token you need to first
 obtain one. It is fairly easy to obtain one. See typeform’s [help
-page](https://developer.typeform.com/get-started/personal-access-token/).
+page](https://www.typeform.com/developers/get-started/personal-access-token/).
 The token will look something like
 
 > 943af478d3ff3d4d760020c11af102b79c440513
@@ -61,7 +61,8 @@ use scopes to define the extent of access to a users data. This way your
 app can request a users permission to undertake actions on that users
 behalf.
 
-[This link](https://developer.typeform.com/get-started/applications/)
+[This
+link](https://www.typeform.com/developers/get-started/applications/)
 will get you started with registering a new application on your account.
 
 Once you have your client id and client secret you can use the
@@ -98,7 +99,7 @@ token can be cached in a local .httr-oauth file between sessions.
 
 You define the scope at the time that the access token is generated. To
 discover what each scope allows access to, see
-[here](https://developer.typeform.com/get-started/scopes/).
+[here](https://www.typeform.com/developers/get-started/scopes/).
 
 ## Using the package
 
@@ -116,7 +117,7 @@ of forms.
 
 ``` r
 attr(forms, "total_items")
-#> [1] 332
+#> [1] 476
 ```
 
 If you don’t pass your `api` token as an argument, it will attempt to

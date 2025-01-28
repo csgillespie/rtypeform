@@ -7,7 +7,7 @@ Authors@R: c(
     person("Jamie", "Owen", , "jamie@jumpingrivers.com", role = "aut")
   )
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
-Description: An R interface to the 'typeform' <https://typeform.com>
+Description: An R interface to the 'typeform' <https://www.typeform.com/>
     application program interface.  Also provides functions for
     downloading your results.
 License: GPL-2 | GPL-3
@@ -27,3 +27,4 @@ Suggests:
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
