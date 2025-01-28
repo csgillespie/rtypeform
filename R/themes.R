@@ -13,13 +13,14 @@
 #' @param font See https://developer.typeform.com/create/reference/create-theme/
 #' @param has_transparent_button See https://developer.typeform.com/create/reference/create-theme/
 #' @export
-create_theme = function(name, api = NULL,
-                        background_href = NULL, background_layout = "fullscreen",
-                        background_brightness = 0,
-                        colors_answer = "#4FB0AE", colors_background = "#FFFFFF",
-                        colors_button = "#4FB0AE", colors_question = "#3D3D3D",
-                        font = "Source Sans Pro",
-                        has_transparent_button = TRUE
+create_theme = function(
+    name, api = NULL,
+    background_href = NULL, background_layout = "fullscreen",
+    background_brightness = 0,
+    colors_answer = "#4FB0AE", colors_background = "#FFFFFF",
+    colors_button = "#4FB0AE", colors_question = "#3D3D3D",
+    font = "Source Sans Pro",
+    has_transparent_button = TRUE
 ) {
   stop("Broken API - TODO FIX")
   l = list(font = jsonlite::unbox(font),

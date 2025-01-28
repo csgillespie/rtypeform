@@ -1,4 +1,4 @@
-#' Get Authorziation
+#' Get Authorization
 #'
 #' A function to get authorization
 #' @param api An authentication key
@@ -73,7 +73,7 @@ delete_response = function(api, url) {
 #' server
 #' @param api An authentication key
 #' @param url The URL of the site
-#' @param body The infrormation sent out to the server. e.g. the title
+#' @param body The information sent out to the server. e.g. the title
 #' @param ... Other arguments
 #' @export
 post_response = function(api, url, body = NULL, ...) {

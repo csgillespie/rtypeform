@@ -50,7 +50,7 @@ get_forms = function(api = NULL,
   }
 
   theme = dplyr::select(items$theme, theme = "href")
-  self = dplyr::rename(items$self, questions = .data$href)
+  self = dplyr::rename(items$self, questions = "href")
 
   items = items %>%
     dplyr::select(-"settings", -"self", -"theme", -.data[["_links"]]) %>%
@@ -59,9 +59,9 @@ get_forms = function(api = NULL,
                      self,
                      theme,
                      items$`_links`) %>%
-    dplyr::rename(questionnaire_url = .data$display,
-                  last_updated = .data$last_updated_at,
-                  form_id = .data$id) %>%
+    dplyr::rename(questionnaire_url = "display",
+                  last_updated = "last_updated_at",
+                  form_id = "id") %>%
     dplyr::mutate(last_updated = lubridate::ymd_hms(items$last_updated_at))
   attr(items, "total_items") = content$total_items
   attr(items, "page_count") = content$page_count

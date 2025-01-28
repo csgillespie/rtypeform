@@ -2,7 +2,7 @@
 % Please edit documentation in R/httr_responses.R
 \name{get_authorization}
 \alias{get_authorization}
-\title{Get Authorziation}
+\title{Get Authorization}
 \usage{
 get_authorization(api)
 }

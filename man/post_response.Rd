@@ -11,7 +11,7 @@ post_response(api, url, body = NULL, ...)
 
 \item{url}{The URL of the site}
 
-\item{body}{The infrormation sent out to the server. e.g. the title}
+\item{body}{The information sent out to the server. e.g. the title}
 
 \item{...}{Other arguments}
 }

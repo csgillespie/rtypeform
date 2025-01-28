@@ -21,10 +21,10 @@ make_new_token = function() {
 
   app = httr::oauth_app("typeform", key = key, secret = secret)
   endpoint = httr::oauth_endpoint(authorize = "https://api.typeform.com/oauth/authorize",
-                            access = "https://api.typeform.com/oauth/token")
+                                  access = "https://api.typeform.com/oauth/token")
 
   typeform_token = httr::oauth2.0_token(endpoint = endpoint,
-                                  app = app,
-                                  scope = scope)
+                                        app = app,
+                                        scope = scope)
   typeform_token
 }

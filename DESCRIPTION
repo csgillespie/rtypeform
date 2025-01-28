@@ -1,20 +1,15 @@
 Type: Package
 Package: rtypeform
 Title: Interface to 'typeform' Results
-Version: 2.1.9001
-Authors@R: 
-    c(person(given = "Colin",
-             family = "Gillespie",
-             role = c("aut", "cre"),
-             email = "csgillespie@gmail.com"),
-      person(given = "Jamie",
-             family = "Owen",
-             role = "aut",
-             email = "jamie@jumpingrivers.com"))
+Version: 2.1.1
+Authors@R: c(
+    person("Colin", "Gillespie", , "csgillespie@gmail.com", role = c("aut", "cre")),
+    person("Jamie", "Owen", , "jamie@jumpingrivers.com", role = "aut")
+  )
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
-Description: An R interface to the 'typeform'
-    <https://typeform.com> application program interface.  Also provides
-    functions for downloading your results.
+Description: An R interface to the 'typeform' <https://typeform.com>
+    application program interface.  Also provides functions for
+    downloading your results.
 License: GPL-2 | GPL-3
 URL: https://github.com/csgillespie/rtypeform
 BugReports: https://github.com/csgillespie/rtypeform/issues
@@ -31,4 +26,4 @@ Suggests:
     testthat
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.2.2
+RoxygenNote: 7.3.2
