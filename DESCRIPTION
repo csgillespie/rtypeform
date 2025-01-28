@@ -25,6 +25,5 @@ Imports:
 Suggests: 
     testthat
 Encoding: UTF-8
-LazyData: TRUE
 RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
