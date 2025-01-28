@@ -53,7 +53,7 @@ get_forms = function(api = NULL,
   self = dplyr::rename(items$self, questions = "href")
 
   items = items %>%
-    dplyr::select(-"settings", -"self", -"theme", -.data[["_links"]]) %>%
+    dplyr::select(-"settings", -"self", -"theme", -"_links") %>%
     dplyr::as_tibble() %>%
     dplyr::bind_cols(items$settings,
                      self,
